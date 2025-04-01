@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
-# frozen_string_literal: true
 require 'json'
 require 'zlib'
 require 'sinatra/base'
+# require 'rack/typhoeus'
 
 TESTSERVER = Sinatra.new do
-  set :logging, nil
+  set :logging, false
+  # use Rack::Typhoeus::Middleware::ParamsDecoder
 
   fail_count = 0
 
@@ -20,6 +21,14 @@ TESTSERVER = Sinatra.new do
 
   get '/multiple-headers' do
     [200, { 'Set-Cookie' => %w[ foo bar ], 'Content-Type' => 'text/plain' }, ['']]
+  end
+
+  get '/cookies-test' do
+    [200, { 'Set-Cookie' => %w(foo=bar bar=foo), 'Content-Type' => 'text/plain' }, ['']]
+  end
+
+  get '/cookies-test2' do
+    [200, { 'Set-Cookie' => %w(foo2=bar bar2=foo), 'Content-Type' => 'text/plain' }, ['']]
   end
 
   get '/fail/:number' do

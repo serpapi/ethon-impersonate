@@ -6,3 +6,4 @@ Gemfile.lock
 doc
 coverage
 .idea
+spec/examples.txt

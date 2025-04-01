@@ -96,7 +96,9 @@ module Ethon
       }
 
       AVAILABLE_INFORMATIONS.each do |name, type|
-        eval %Q|def #{name}; Curl.send(:get_info_#{type}, :#{name}, handle); end|
+        define_method(name) do
+          Curl.send("get_info_#{type}".to_sym, name.to_sym, handle)
+        end
       end
 
       # Returns true if this curl version supports zlib.

@@ -32,7 +32,9 @@ module Ethon
       end
 
       MESSAGE_TYPES.each do |type|
-        eval %Q|def #{type}; messages_for(:#{type}); end|
+        define_method(type) do
+          messages_for(type.to_sym)
+        end
       end
 
       def to_a
