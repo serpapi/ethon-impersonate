@@ -6,7 +6,7 @@ describe Ethon::Easy::Http::Patch do
   let(:url) { "http://localhost:3001/" }
   let(:params) { nil }
   let(:form) { nil }
-  let(:patch) { described_class.new(url, {:params => params, :body => form}) }
+  let(:patch) { described_class.new(url, {params: params, body: form}) }
 
   describe "#setup" do
     it "sets customrequest" do
@@ -20,7 +20,7 @@ describe Ethon::Easy::Http::Patch do
     end
 
     context "when requesting" do
-      let(:params) { {:a => "1&b=2"} }
+      let(:params) { {a: "1&b=2"} }
 
       before do
         patch.setup(easy)

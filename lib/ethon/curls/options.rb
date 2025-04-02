@@ -6,9 +6,9 @@ module Ethon
     # easy or multi interface.
     module Options
 
-      OPTION_STRINGS = { :easy => 'easy_options', :multi => 'multi_options' }.freeze
-      FOPTION_STRINGS = { :easy => 'EASY_OPTIONS', :multi => 'MULTI_OPTIONS' }.freeze
-      FUNCS = { :easy => 'easy_setopt', :multi => 'multi_setopt' }.freeze
+      OPTION_STRINGS = { easy: 'easy_options', multi: 'multi_options' }.freeze
+      FOPTION_STRINGS = { easy: 'EASY_OPTIONS', multi: 'MULTI_OPTIONS' }.freeze
+      FUNCS = { easy: 'easy_setopt', multi: 'multi_setopt' }.freeze
       # Sets appropriate option for easy, depending on value type.
       def set_option(option, value, handle, type = :easy)
         type = type.to_sym unless type.is_a?(Symbol)
@@ -109,22 +109,22 @@ module Ethon
       end
 
       OPTION_TYPE_BASE = {
-        :long => 0,
-        :objectpoint => 10000,
-        :functionpoint => 20000,
-        :off_t => 30000
+        long: 0,
+        objectpoint: 10000,
+        functionpoint: 20000,
+        off_t: 30000
       }
       OPTION_TYPE_MAP = {
-        :none => :long,
-        :int => :long,
-        :bool => :long,
-        :time => :long,
-        :enum => :long, # Two ways to specify values (as opts parameter):
+        none: :long,
+        int: :long,
+        bool: :long,
+        time: :long,
+        enum: :long, # Two ways to specify values (as opts parameter):
                         #   * Array of symbols, these will number sequentially
                         #     starting at 0. Skip elements with nil. (see :netrc)
-                        #   * Hash of :symbol => enum_value (See :proxytype)
-        :bitmask => :long, # Three ways to specify values (as opts parameter):
-                           #   * Hash of :symbol => bitmask_value or Array.
+                        #   * Hash of symbol: enum_value (See :proxytype)
+        bitmask: :long, # Three ways to specify values (as opts parameter):
+                           #   * Hash of symbol: bitmask_value or Array.
                            #     An Array can be an array of already defined
                            #     Symbols, which represents a bitwise or of those
                            #     symbols. (See :httpauth)
@@ -134,20 +134,20 @@ module Ethon
                            #     Hash, which will be interpreted as above.
                            #     (See :protocols)
                            # :all defaults to all bits set
-        :string => :objectpoint,
-        :string_escape_null => :objectpoint,
-        :string_as_pointer => :objectpoint,
-        :ffipointer => :objectpoint, # FFI::Pointer
-        :curl_slist => :objectpoint,
-        :buffer => :objectpoint, # A memory buffer of size defined in the options
-        :dontuse_object => :objectpoint, # An object we don't support (e.g. FILE*)
-        :cbdata => :objectpoint,
-        :callback => :functionpoint,
-        :socket_callback => :functionpoint,
-        :timer_callback => :functionpoint,
-        :debug_callback => :functionpoint,
-        :progress_callback => :functionpoint,
-        :off_t => :off_t,
+        string: :objectpoint,
+        string_escape_null: :objectpoint,
+        string_as_pointer: :objectpoint,
+        ffipointer: :objectpoint, # FFI::Pointer
+        curl_slist: :objectpoint,
+        buffer: :objectpoint, # A memory buffer of size defined in the options
+        dontuse_object: :objectpoint, # An object we don't support (e.g. FILE*)
+        cbdata: :objectpoint,
+        callback: :functionpoint,
+        socket_callback: :functionpoint,
+        timer_callback: :functionpoint,
+        debug_callback: :functionpoint,
+        progress_callback: :functionpoint,
+        off_t: :off_t,
       }
 
       def self.option(ftype,name,type,num,opts=nil)
@@ -192,9 +192,9 @@ module Ethon
           raise ArgumentError, "Ethon::Curls::Options #{ftype} #{name} Expected no opts." unless opts.nil?
         end
         opthash=const_get(FOPTION_STRINGS[ftype])
-        opthash[name] = { :type => type,
-                          :opt => OPTION_TYPE_BASE[OPTION_TYPE_MAP[type]] + num,
-                          :opts => opts }
+        opthash[name] = { type: type,
+                          opt: OPTION_TYPE_BASE[OPTION_TYPE_MAP[type]] + num,
+                          opts: opts }
       end
 
       def self.option_alias(ftype,name,*aliases)
@@ -320,11 +320,11 @@ module Ethon
       option :easy, :password, :string, 174
       option :easy, :proxyusername, :string, 175
       option :easy, :proxypassword, :string, 176
-      option :easy, :httpauth, :bitmask, 107, [:none, :basic, :digest, :gssnegotiate, :ntlm, :digest_ie, :ntlm_wb, {:only => 1<<31, :any => ~0x10, :anysafe => ~0x11, :auto => 0x1f}]
+      option :easy, :httpauth, :bitmask, 107, [:none, :basic, :digest, :gssnegotiate, :ntlm, :digest_ie, :ntlm_wb, {only: 1<<31, any: ~0x10, anysafe: ~0x11, auto: 0x1f}]
       option :easy, :tlsauth_type, :enum, 206, [:none, :srp]
       option :easy, :tlsauth_username, :string, 204
       option :easy, :tlsauth_password, :string, 205
-      option :easy, :proxyauth, :bitmask, 111, [:none, :basic, :digest, :gssnegotiate, :ntlm, :digest_ie, :ntlm_wb, {:only => 1<<31, :any => ~0x10, :anysafe => ~0x11, :auto => 0x1f}]
+      option :easy, :proxyauth, :bitmask, 111, [:none, :basic, :digest, :gssnegotiate, :ntlm, :digest_ie, :ntlm_wb, {only: 1<<31, any: ~0x10, anysafe: ~0x11, auto: 0x1f}]
       option :easy, :sasl_ir, :bool, 218
       ## HTTP OPTIONS
       option :easy, :autoreferer, :bool, 58
@@ -334,7 +334,7 @@ module Ethon
       option :easy, :followlocation, :bool, 52
       option :easy, :unrestricted_auth, :bool, 105
       option :easy, :maxredirs, :int, 68
-      option :easy, :postredir, :bitmask, 161, [:get_all, :post_301, :post_302, :post_303, {:post_all => [:post_301, :post_302, :post_303]}]
+      option :easy, :postredir, :bitmask, 161, [:get_all, :post_301, :post_302, :post_303, {post_all: [:post_301, :post_302, :post_303]}]
       option_alias :easy, :postredir, :post301
       option :easy, :put, :bool, 54
       option :easy, :post, :bool, 47
@@ -483,7 +483,7 @@ module Ethon
       option_alias :easy, :proxy_pinnedpublickey, :proxy_pinned_public_key
       option :easy, :proxy_issuercert, :string, 296
       ## SSH OPTIONS
-      option :easy, :ssh_auth_types, :bitmask, 151, [:none, :publickey, :password, :host, :keyboard, :agent, {:any => [:all], :default => [:any]}]
+      option :easy, :ssh_auth_types, :bitmask, 151, [:none, :publickey, :password, :host, :keyboard, :agent, {any: [:all], default: [:any]}]
       option :easy, :ssh_host_public_key_md5, :string, 162
       option :easy, :ssh_public_keyfile, :string, 152
       option :easy, :ssh_private_keyfile, :string, 153

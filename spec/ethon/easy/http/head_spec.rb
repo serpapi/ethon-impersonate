@@ -6,7 +6,7 @@ describe Ethon::Easy::Http::Head do
   let(:url) { "http://localhost:3001/" }
   let(:params) { nil }
   let(:form) { nil }
-  let(:head) { described_class.new(url, {:params => params, :body => form}) }
+  let(:head) { described_class.new(url, {params: params, body: form}) }
 
   describe "#setup" do
     context "when nothing" do
@@ -22,7 +22,7 @@ describe Ethon::Easy::Http::Head do
     end
 
     context "when params" do
-      let(:params) { {:a => "1&b=2"} }
+      let(:params) { {a: "1&b=2"} }
 
       it "sets nobody" do
         expect(easy).to receive(:nobody=).with(true)
@@ -63,7 +63,7 @@ describe Ethon::Easy::Http::Head do
     end
 
     context "when body" do
-      let(:form) { {:a => 1} }
+      let(:form) { {a: 1} }
 
       context "when requesting" do
         before do

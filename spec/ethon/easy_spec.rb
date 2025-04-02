@@ -20,7 +20,7 @@ describe Ethon::Easy do
 
     context "when options not empty" do
       context "when followlocation is set" do
-        let(:options) { { :followlocation => true } }
+        let(:options) { { followlocation: true } }
         let(:easy) { Ethon::Easy.new(options) }
 
         it "sets followlocation" do
@@ -45,13 +45,13 @@ describe Ethon::Easy do
       context "when valid key" do
         it "sets" do
           expect(easy).to receive(:verbose=).with(true)
-          easy.set_attributes({:verbose => true})
+          easy.set_attributes({verbose: true})
         end
       end
 
       context "when invalid key" do
         it "raises invalid option error" do
-          expect{ easy.set_attributes({:fubar => 1}) }.to raise_error(Ethon::Errors::InvalidOption)
+          expect{ easy.set_attributes({fubar: 1}) }.to raise_error(Ethon::Errors::InvalidOption)
         end
       end
     end

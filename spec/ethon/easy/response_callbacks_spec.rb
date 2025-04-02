@@ -72,7 +72,7 @@ describe Ethon::Easy::ResponseCallbacks do
   describe "#progress" do
     context "when requesting for realz" do
       it "executes callback" do
-        post = Ethon::Easy::Http::Post.new("http://localhost:3001", {:body => "bar=fu"})
+        post = Ethon::Easy::Http::Post.new("http://localhost:3001", {body: "bar=fu"})
         post.setup(easy)
         @called = false
         @has_dltotal = false

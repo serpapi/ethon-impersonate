@@ -20,7 +20,7 @@ describe Ethon::Multi do
 
     context "when options not empty" do
       context "when pipelining is set" do
-        let(:options) { { :pipelining => true } }
+        let(:options) { { pipelining: true } }
 
         it "sets pipelining" do
           expect_any_instance_of(Ethon::Multi).to receive(:pipelining=).with(true)
@@ -29,7 +29,7 @@ describe Ethon::Multi do
       end
 
       context "when execution_mode option is :socket_action" do
-        let(:options) { { :execution_mode => :socket_action } }
+        let(:options) { { execution_mode: :socket_action } }
         let(:multi) { Ethon::Multi.new(options) }
 
         it "refuses to run #perform" do
@@ -44,8 +44,8 @@ describe Ethon::Multi do
   end
 
   describe "#socket_action" do
-    let(:options) { { :execution_mode => :socket_action } }
-    let(:select_state) { { :readers => [], :writers => [], :timeout => 0 } }
+    let(:options) { { execution_mode: :socket_action } }
+    let(:select_state) { { readers: [], writers: [], timeout: 0 } }
     let(:multi) {
       multi = Ethon::Multi.new(options)
       multi.timerfunction = proc do |handle, timeout_ms, userp|

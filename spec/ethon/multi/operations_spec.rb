@@ -54,7 +54,7 @@ describe Ethon::Multi::Operations do
 
       before do
         expect(Ethon::Curl).to receive(:multi_timeout).and_return(:ok)
-        multi.instance_variable_set(:@timeout, double(:read_long => timeout))
+        multi.instance_variable_set(:@timeout, double(read_long: timeout))
       end
 
       it "doesn't raise" do
@@ -102,7 +102,7 @@ describe Ethon::Multi::Operations do
         let(:max_fd) { -1 }
 
         before do
-          multi.instance_variable_set(:@max_fd, double(:read_int => max_fd))
+          multi.instance_variable_set(:@max_fd, double(read_int: max_fd))
           expect(multi).to receive(:sleep).with(0.001)
         end
 

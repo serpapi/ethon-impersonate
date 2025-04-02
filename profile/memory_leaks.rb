@@ -64,48 +64,48 @@ end
 
 describe "higher level operations" do
   memory_leak_test("a simple request") do
-    Ethon::Easy.new(:url => "http://localhost:3001/",
-                    :forbid_reuse => true).perform
+    Ethon::Easy.new(url: "http://localhost:3001/",
+                    forbid_reuse: true).perform
   end
 
   memory_leak_test("a request with headers") do
-    Ethon::Easy.new(:url => "http://localhost:3001/",
-                    :headers => { "Content-Type" => "application/json",
+    Ethon::Easy.new(url: "http://localhost:3001/",
+                    headers: { "Content-Type" => "application/json",
                                   "Something" => "1",
                                   "Else" => "qwerty",
                                   "Long-String" => "aassddffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz"},
-                    :forbid_reuse => true).perform
+                    forbid_reuse: true).perform
   end
 
   memory_leak_test("a request with headers and params") do
-    easy = Ethon::Easy.new(:url => "http://localhost:3001/",
-                    :headers => { "Content-Type" => "application/json",
+    easy = Ethon::Easy.new(url: "http://localhost:3001/",
+                    headers: { "Content-Type" => "application/json",
                                   "Something" => "1",
                                   "Else" => "qwerty",
                                   "Long-String" => "aassddffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz"},
-                    :forbid_reuse => true)
+                    forbid_reuse: true)
     easy.http_request("http://localhost:3001/",
                       :get,
-                      :params => { "param1" => "value1",
+                      params: { "param1" => "value1",
                                    "param2" => "value2",
                                    "param3" => "value3",
                                    "param4" => "value4"})
   end
 
   memory_leak_test("a request with headers, params, and body") do
-    easy = Ethon::Easy.new(:url => "http://localhost:3001/",
-                    :headers => { "Content-Type" => "application/json",
+    easy = Ethon::Easy.new(url: "http://localhost:3001/",
+                    headers: { "Content-Type" => "application/json",
                                   "Something" => "1",
                                   "Else" => "qwerty",
                                   "Long-String" => "aassddffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz"},
-                    :forbid_reuse => true)
+                    forbid_reuse: true)
     easy.http_request("http://localhost:3001/",
                       :get,
-                      :params => { "param1" => "value1",
+                      params: { "param1" => "value1",
                                    "param2" => "value2",
                                    "param3" => "value3",
                                    "param4" => "value4"},
-                      :body => {
+                      body: {
                         "body1" => "value1",
                         "body2" => "value2",
                         "body3" => "value3"

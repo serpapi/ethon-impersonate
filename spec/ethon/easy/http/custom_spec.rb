@@ -6,7 +6,7 @@ describe Ethon::Easy::Http::Custom do
   let(:url) { "http://localhost:3001/" }
   let(:params) { nil }
   let(:form) { nil }
-  let(:custom) { described_class.new("PURGE", url, {:params => params, :body => form}) }
+  let(:custom) { described_class.new("PURGE", url, {params: params, body: form}) }
 
   describe "#setup" do
     context "when nothing" do
@@ -23,7 +23,7 @@ describe Ethon::Easy::Http::Custom do
     end
 
     context "when params" do
-      let(:params) { {:a => "1&"} }
+      let(:params) { {a: "1&"} }
 
       it "attaches escaped to url" do
         custom.setup(easy)
@@ -53,7 +53,7 @@ describe Ethon::Easy::Http::Custom do
 
     context "when body" do
       context "when multipart" do
-        let(:form) { {:a => File.open(__FILE__, 'r')} }
+        let(:form) { {a: File.open(__FILE__, 'r')} }
 
         it "sets httppost" do
           expect(easy).to receive(:httppost=)
@@ -90,7 +90,7 @@ describe Ethon::Easy::Http::Custom do
       end
 
       context "when not multipart" do
-        let(:form) { {:a => "1&b=2"} }
+        let(:form) { {a: "1&b=2"} }
         let(:encoded) { "a=1%26b%3D2" }
 
         it "sets escaped copypostfields" do
@@ -154,8 +154,8 @@ describe Ethon::Easy::Http::Custom do
     end
 
     context "when params and body" do
-      let(:form) { {:a => "1"} }
-      let(:params) { {:b => "2"} }
+      let(:form) { {a: "1"} }
+      let(:params) { {b: "2"} }
 
       context "when requesting" do
         before do

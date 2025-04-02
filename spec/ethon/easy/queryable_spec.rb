@@ -87,7 +87,7 @@ describe Ethon::Easy::Queryable do
     end
 
     context "when params is simple hash" do
-      let(:hash) { {:a => 1, :b => 2} }
+      let(:hash) { {a: 1, b: 2} }
 
       it "transforms" do
         expect(pairs).to include([:a, 1])
@@ -96,7 +96,7 @@ describe Ethon::Easy::Queryable do
     end
 
     context "when params is a nested hash" do
-      let(:hash) { {:a => 1, :b => {:c => 2}} }
+      let(:hash) { {a: 1, b: {c: 2}} }
 
       it "transforms" do
         expect(pairs).to include([:a, 1])
@@ -105,7 +105,7 @@ describe Ethon::Easy::Queryable do
     end
 
     context "when params contains an array" do
-      let(:hash) { {:a => 1, :b => [2, 3]} }
+      let(:hash) { {a: 1, b: [2, 3]} }
 
       context "by default" do
         it "transforms" do
@@ -135,7 +135,7 @@ describe Ethon::Easy::Queryable do
 
     context "when params contains something nested in an array" do
       context "when string" do
-        let(:hash) { {:a => {:b => ["hello", "world"]}} }
+        let(:hash) { {a: {b: ["hello", "world"]}} }
 
         it "transforms" do
           expect(pairs).to eq([["a[b][0]", "hello"], ["a[b][1]", "world"]])
@@ -143,7 +143,7 @@ describe Ethon::Easy::Queryable do
       end
 
       context "when hash" do
-        let(:hash) { {:a => {:b => [{:c =>1}, {:d => 2}]}} }
+        let(:hash) { {a: {b: [{c: 1}, {d: 2}]}} }
 
         it "transforms" do
           expect(pairs).to eq([["a[b][0][c]", 1], ["a[b][1][d]", 2]])
@@ -153,7 +153,7 @@ describe Ethon::Easy::Queryable do
       context "when file" do
         let(:file) { File.open("spec/spec_helper.rb") }
         let(:file_info) { params.method(:file_info).call(file) }
-        let(:hash) { {:a => {:b => [file]}} }
+        let(:hash) { {a: {b: [file]}} }
         let(:mime_type) { file_info[1] }
 
         it "transforms" do
@@ -192,7 +192,7 @@ describe Ethon::Easy::Queryable do
     context "when params contains file" do
       let(:file) { Tempfile.new("fubar") }
       let(:file_info) { params.method(:file_info).call(file) }
-      let(:hash) { {:a => 1, :b => file} }
+      let(:hash) { {a: 1, b: file} }
 
       it "transforms" do
         expect(pairs).to include([:a, 1])
@@ -201,7 +201,7 @@ describe Ethon::Easy::Queryable do
     end
 
     context "when params key contains a null byte" do
-      let(:hash) { {:a => "1\0" } }
+      let(:hash) { {a: "1\0" } }
 
       it "preserves" do
         expect(pairs).to eq([[:a, "1\0"]])
@@ -225,7 +225,7 @@ describe Ethon::Easy::Queryable do
     end
 
     context "when params not empty" do
-      let(:hash) { {:a => 1} }
+      let(:hash) { {a: 1} }
 
       it "returns false" do
         expect(params.empty?).to be_falsey

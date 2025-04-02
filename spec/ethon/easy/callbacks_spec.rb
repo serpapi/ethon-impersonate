@@ -37,7 +37,7 @@ describe Ethon::Easy::Callbacks do
 
   describe "#body_write_callback" do
     let(:body_write_callback) { easy.instance_variable_get(:@body_write_callback) }
-    let(:stream) { double(:read_string => "") }
+    let(:stream) { double(read_string: "") }
     context "when body returns not :abort" do
       it "returns number bigger than 0" do
         expect(body_write_callback.call(stream, 1, 1, nil) > 0).to be(true)
@@ -59,7 +59,7 @@ describe Ethon::Easy::Callbacks do
 
   describe "#header_write_callback" do
     let(:header_write_callback) { easy.instance_variable_get(:@header_write_callback) }
-    let(:stream) { double(:read_string => "") }
+    let(:stream) { double(read_string: "") }
     context "when header returns not :abort" do
       it "returns number bigger than 0" do
         expect(header_write_callback.call(stream, 1, 1, nil) > 0).to be(true)

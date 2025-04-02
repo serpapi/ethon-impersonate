@@ -20,7 +20,7 @@ describe Ethon::Easy::Mirror do
   end
 
   describe "#to_hash" do
-    let(:options) { {:return_code => 1} }
+    let(:options) { {return_code: 1} }
 
     it "returns mirror as hash" do
       expect(mirror.to_hash).to eq(options)
@@ -28,7 +28,7 @@ describe Ethon::Easy::Mirror do
   end
 
   describe "#log_informations" do
-    let(:options) { {:return_code => 1} }
+    let(:options) { {return_code: 1} }
 
     it "returns hash" do
       expect(mirror.log_informations).to be_a(Hash)

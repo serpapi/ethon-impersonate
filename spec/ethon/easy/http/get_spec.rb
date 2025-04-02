@@ -7,7 +7,7 @@ describe Ethon::Easy::Http::Get do
   let(:params) { nil }
   let(:form) { nil }
   let(:options) { {} }
-  let(:get) { described_class.new(url, {:params => params, :body => form}.merge(options)) }
+  let(:get) { described_class.new(url, {params: params, body: form}.merge(options)) }
 
   describe "#setup" do
     it "sets url" do
@@ -16,7 +16,7 @@ describe Ethon::Easy::Http::Get do
     end
 
     context "when body" do
-      let(:form) { { :a => 1 } }
+      let(:form) { { a: 1 } }
 
       it "sets customrequest" do
         expect(easy).to receive(:customrequest=).with("GET")
@@ -39,7 +39,7 @@ describe Ethon::Easy::Http::Get do
 
       context "when url already contains params" do
         let(:url) { "http://localhost:3001/?query=here" }
-        let(:params) { {:a => "1&b=2"} }
+        let(:params) { {a: "1&b=2"} }
 
         it "returns ok" do
           expect(easy.return_code).to eq(:ok)
@@ -55,7 +55,7 @@ describe Ethon::Easy::Http::Get do
       end
 
       context "when params and no body" do
-        let(:params) { {:a => "1&b=2"} }
+        let(:params) { {a: "1&b=2"} }
 
         it "returns ok" do
           expect(easy.return_code).to eq(:ok)
@@ -71,8 +71,8 @@ describe Ethon::Easy::Http::Get do
       end
 
       context "when params and body" do
-        let(:params) { {:a => "1&b=2"} }
-        let(:form) { {:b => "2"} }
+        let(:params) { {a: "1&b=2"} }
+        let(:form) { {b: "2"} }
 
         it "returns ok" do
           expect(easy.return_code).to eq(:ok)
@@ -88,7 +88,7 @@ describe Ethon::Easy::Http::Get do
       end
 
       context "with :escape" do
-        let(:params) { {:a => "1&b=2"} }
+        let(:params) { {a: "1&b=2"} }
 
         context 'missing' do
           it "escapes values" do
@@ -97,7 +97,7 @@ describe Ethon::Easy::Http::Get do
         end
 
         context 'nil' do
-          let(:options) { {:escape => nil} }
+          let(:options) { {escape: nil} }
 
           it "escapes values" do
             expect(easy.url).to eq("#{url}?a=1%26b%3D2")
@@ -105,7 +105,7 @@ describe Ethon::Easy::Http::Get do
         end
 
         context 'true' do
-          let(:options) { {:escape => true} }
+          let(:options) { {escape: true} }
 
           it "escapes values" do
             expect(easy.url).to eq("#{url}?a=1%26b%3D2")
@@ -113,7 +113,7 @@ describe Ethon::Easy::Http::Get do
         end
 
         context 'false' do
-          let(:options) { {:escape => false} }
+          let(:options) { {escape: false} }
 
           it "sends raw values" do
             expect(easy.url).to eq("#{url}?a=1&b=2")

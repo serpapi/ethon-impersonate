@@ -6,7 +6,7 @@ describe Ethon::Easy::Http::Delete do
   let(:url) { "http://localhost:3001/" }
   let(:params) { nil }
   let(:form) { nil }
-  let(:delete) { described_class.new(url, {:params => params, :body => form}) }
+  let(:delete) { described_class.new(url, {params: params, body: form}) }
 
   context "when requesting" do
     before do

@@ -91,7 +91,7 @@ TESTSERVER = Sinatra.new do
 
   get '/**' do
     sleep params["delay"].to_i if params.has_key?("delay")
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 
   head '/**' do
@@ -99,26 +99,26 @@ TESTSERVER = Sinatra.new do
   end
 
   put '/**' do
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 
   post '/**' do
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 
   delete '/**' do
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 
   patch '/**' do
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 
   options '/**' do
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 
   route 'PURGE', '/**' do
-    request.env.merge!(:body => request.body.read).to_json
+    request.env.merge!(body: request.body.read).to_json
   end
 end

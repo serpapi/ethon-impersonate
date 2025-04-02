@@ -7,7 +7,7 @@ describe Ethon::Easy::Http::Post do
   let(:params) { nil }
   let(:form) { nil }
   let(:options) { Hash.new }
-  let(:post) { described_class.new(url, options.merge({:params => params, :body => form})) }
+  let(:post) { described_class.new(url, options.merge({params: params, body: form})) }
 
   describe "#setup" do
     context "when nothing" do
@@ -34,7 +34,7 @@ describe Ethon::Easy::Http::Post do
     end
 
     context "when params" do
-      let(:params) { {:a => "1&"} }
+      let(:params) { {a: "1&"} }
 
       it "attaches escaped to url" do
         post.setup(easy)
@@ -42,7 +42,7 @@ describe Ethon::Easy::Http::Post do
       end
 
       context "with arrays" do
-        let(:params) { {:a => %w( foo bar )} }
+        let(:params) { {a: %w( foo bar )} }
 
         context "by default" do
           it "encodes them with indexes" do
@@ -52,7 +52,7 @@ describe Ethon::Easy::Http::Post do
         end
 
         context "when params_encoding is :rack" do
-          let(:options) { {:params_encoding => :rack} }
+          let(:options) { {params_encoding: :rack} }
           it "encodes them without indexes" do
             post.setup(easy)
             expect(easy.url).to eq("#{url}?a%5B%5D=foo&a%5B%5D=bar")
@@ -69,7 +69,7 @@ describe Ethon::Easy::Http::Post do
         end
 
         context 'nil' do
-          let(:options) { {:escape => nil} }
+          let(:options) { {escape: nil} }
 
           it "escapes values" do
             post.setup(easy)
@@ -78,7 +78,7 @@ describe Ethon::Easy::Http::Post do
         end
 
         context 'true' do
-          let(:options) { {:escape => true} }
+          let(:options) { {escape: true} }
 
           it "escapes values" do
             post.setup(easy)
@@ -87,7 +87,7 @@ describe Ethon::Easy::Http::Post do
         end
 
         context 'false' do
-          let(:options) { {:escape => false} }
+          let(:options) { {escape: false} }
 
           it "sends raw values" do
             post.setup(easy)
@@ -153,7 +153,7 @@ describe Ethon::Easy::Http::Post do
 
     context "when body" do
       context "when multipart" do
-        let(:form) { {:a => File.open(__FILE__, 'r')} }
+        let(:form) { {a: File.open(__FILE__, 'r')} }
 
         it "sets httppost" do
           expect(easy).to receive(:httppost=)
@@ -190,7 +190,7 @@ describe Ethon::Easy::Http::Post do
       end
 
       context "when not multipart" do
-        let(:form) { {:a => "1&b=2"} }
+        let(:form) { {a: "1&b=2"} }
         let(:encoded) { "a=1%26b%3D2" }
 
         it "sets escaped copypostfields" do
@@ -273,7 +273,7 @@ describe Ethon::Easy::Http::Post do
       end
 
       context "when arrays" do
-        let(:form) { {:a => %w( foo bar )} }
+        let(:form) { {a: %w( foo bar )} }
 
         context "by default" do
           it "sets copypostfields with indexed, escaped representation" do
@@ -283,7 +283,7 @@ describe Ethon::Easy::Http::Post do
         end
 
         context "when params_encoding is :rack" do
-          let(:options) { {:params_encoding => :rack} }
+          let(:options) { {params_encoding: :rack} }
 
           it "sets copypostfields with non-indexed, escaped representation" do
             expect(easy).to receive(:copypostfields=).with('a%5B%5D=foo&a%5B%5D=bar')
@@ -294,8 +294,8 @@ describe Ethon::Easy::Http::Post do
     end
 
     context "when params and body" do
-      let(:form) { {:a => "1"} }
-      let(:params) { {:b => "2"} }
+      let(:form) { {a: "1"} }
+      let(:params) { {b: "2"} }
 
       context "when requesting" do
         before do

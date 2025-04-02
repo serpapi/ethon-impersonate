@@ -7,7 +7,7 @@ describe Ethon::Easy::Http::Put do
   let(:params) { nil }
   let(:form) { nil }
   let(:options) { Hash.new }
-  let(:put) { described_class.new(url, options.merge({:params => params, :body => form})) }
+  let(:put) { described_class.new(url, options.merge({params: params, body: form})) }
 
   describe "#setup" do
     context "when nothing" do
@@ -36,7 +36,7 @@ describe Ethon::Easy::Http::Put do
     end
 
     context "when params" do
-      let(:params) { {:a => "1&"} }
+      let(:params) { {a: "1&"} }
 
       it "attaches escaped to url" do
         put.setup(easy)
@@ -44,7 +44,7 @@ describe Ethon::Easy::Http::Put do
       end
 
       context "with arrays" do
-        let(:params) { {:a => %w( foo bar )} }
+        let(:params) { {a: %w( foo bar )} }
 
         context "by default" do
           it "encodes them with indexes" do
@@ -54,7 +54,7 @@ describe Ethon::Easy::Http::Put do
         end
 
         context "when params_encoding is :rack" do
-          let(:options) { {:params_encoding => :rack} }
+          let(:options) { {params_encoding: :rack} }
           it "encodes them without indexes" do
             put.setup(easy)
             expect(easy.url).to eq("#{url}?a%5B%5D=foo&a%5B%5D=bar")
@@ -85,7 +85,7 @@ describe Ethon::Easy::Http::Put do
     end
 
     context "when body" do
-      let(:form) { {:a => "1&b=2"} }
+      let(:form) { {a: "1&b=2"} }
 
       it "sets infilesize" do
         expect(easy).to receive(:infilesize=).with(11)
@@ -122,7 +122,7 @@ describe Ethon::Easy::Http::Put do
         context "when injecting a file as body" do
           let(:file) { File.open(__FILE__) }
           let(:easy) do
-            e = Ethon::Easy.new(:url => url, :upload => true)
+            e = Ethon::Easy.new(url: url, upload: true)
             e.set_read_callback(file)
             e.infilesize = File.size(file.path)
             e
@@ -140,7 +140,7 @@ describe Ethon::Easy::Http::Put do
       end
 
       context "when arrays" do
-        let(:form) { {:a => %w( foo bar )} }
+        let(:form) { {a: %w( foo bar )} }
 
         before do
           put.setup(easy)
@@ -154,7 +154,7 @@ describe Ethon::Easy::Http::Put do
         end
 
         context "when params_encoding is :rack" do
-          let(:options) { {:params_encoding => :rack} }
+          let(:options) { {params_encoding: :rack} }
 
           it "submits an non-indexed, escaped representation" do
             expect(easy.response_body).to include('"body":"a%5B%5D=foo&a%5B%5D=bar"')
