@@ -59,6 +59,7 @@ module Ethon
     VERSION_NTLM_WB = (1<<15) # NTLM delegating to winbind helper
     VERSION_HTTP2 = (1<<16) # HTTP2 support built
     VERSION_GSSAPI = (1<<17) # GSS-API is supported
+    VERSION_IMPERSONATE = (1<<18) # curl-impersonate support
 
     SOCKET_BAD = -1
     SOCKET_TIMEOUT = SOCKET_BAD

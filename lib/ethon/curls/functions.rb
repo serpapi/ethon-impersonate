@@ -22,6 +22,7 @@ module Ethon
         base.attach_function :easy_escape,                :curl_easy_escape,         [:pointer, :pointer, :int],     :pointer
         base.attach_function :easy_reset,                 :curl_easy_reset,          [:pointer],                     :void
         base.attach_function :easy_duphandle,             :curl_easy_duphandle,      [:pointer],                     :pointer
+        base.attach_function :easy_impersonate,           :curl_easy_impersonate,    [:pointer, :string, :int],      :int
 
         base.attach_function :formadd,                    :curl_formadd,             [:pointer, :pointer, :varargs], :int
         base.attach_function :formfree,                   :curl_formfree,            [:pointer],                     :void

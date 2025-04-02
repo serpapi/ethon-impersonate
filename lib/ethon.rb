@@ -18,6 +18,7 @@ require 'ethon/easy'
 require 'ethon/errors'
 require 'ethon/loggable'
 require 'ethon/multi'
+require 'ethon/impersonate'
 require 'ethon/version'
 
 # Ethon is a very simple libcurl.

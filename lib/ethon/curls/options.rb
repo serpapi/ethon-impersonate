@@ -498,6 +498,22 @@ module Ethon
       option :easy, :new_directory_perms, :int, 160
       ## TELNET OPTIONS
       option :easy, :telnetoptions, :curl_slist, 70
+
+      ## TLS Extension Options
+      option :easy, :ech, :string, 10000 + 1009
+      option :easy, :ssl_cert_compression, :string, 10000 + 1003
+      option :easy, :ssl_enable_alps, :int, 0 + 1002
+      option :easy, :ssl_enable_alpn, :int, 0 + 226
+      option :easy, :tls_status_request, :int, 0 + 1016
+      option :easy, :tls_signed_cert_timestamps, :int, 0 + 1015
+      option :easy, :tls_extension_order, :string, 10000 + 1012
+      option :easy, :tls_grease, :int, 0 + 1011
+      option :easy, :ssl_enable_ticket, :int, 0 + 1004
+      option :easy, :ssl_ec_curves, :string, 10000 + 298
+      option :easy, :ssl_sig_hash_algs, :string, 10000 + 1001
+      option :easy, :ssl_permute_extensions, :int, 0 + 1007
+      option :easy, :stream_weight, :int, 0 + 239
+      option :easy, :stream_exclusive, :int, 0 + 1013
     end
   end
 end

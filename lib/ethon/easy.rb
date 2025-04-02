@@ -311,5 +311,22 @@ module Ethon
     def log_inspect
       "EASY #{mirror.log_informations.map{|k, v| "#{k}=#{v}"}.flatten.join(' ')}"
     end
+
+    # Impersonate a browser profile
+    #
+    # @example Impersonate Chrome 110
+    #   easy.impersonate("chrome110")
+    #
+    # @param [ String ] target The browser profile to impersonate
+    # @param [ Boolean ] default_headers Whether to use default headers (default: true)
+    #
+    # @return [ Integer ] The curl return code
+    def impersonate(target, default_headers: true)
+      unless Ethon::Impersonate::Targets.valid_browser?(target)
+        raise Errors::EthonError.new("Invalid impersonation target: '#{target}'")
+      end
+
+      Curl.easy_impersonate(handle, target, default_headers ? 1 : 0)
+    end
   end
 end
