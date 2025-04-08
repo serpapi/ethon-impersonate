@@ -7,3 +7,4 @@ doc
 coverage
 .idea
 spec/examples.txt
+tmp
