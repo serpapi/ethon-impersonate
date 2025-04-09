@@ -36,8 +36,8 @@ REQUESTS = 1000
 PROCESSES = 4
 THREADS = 10
 
-# These params are not applicable to `typhoeus` as it uses own pool under the hood.
-# It also does not keep connections by default (unless used via curl multi interface)
+# These params are not applicable to `typhoeus` as it uses own pool under the hood
+# and keeps connections by default.
 POOL = :connection_pool # nil, :connection_pool, :typhoeus_global_pool
 TWEAK_HANDLES = true # Set additional handle params to improve thread-safety
 RESET_HANDLES = false # Fully reset handle after each request, disables persistent connections
