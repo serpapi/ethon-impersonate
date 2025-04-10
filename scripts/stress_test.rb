@@ -11,7 +11,7 @@
 # ulimit -n 4096  -- should be fine
 #
 
-ADAPTER = :ethon # :ethon, :curb, :typhoeus
+ADAPTER = :ethon # :httprb, :ethon, :curb, :typhoeus
 
 IMPERSONATE = true
 IMPERSONATE_TARGET = "chrome131"
@@ -28,6 +28,7 @@ end
 
 require "curb"     if ADAPTER == :curb
 require "typhoeus" if ADAPTER == :typhoeus
+require "http"     if ADAPTER == :httprb
 
 require "parallel"
 require "connection_pool"
@@ -39,14 +40,17 @@ THREADS = 10
 # These params are not applicable to `typhoeus` as it uses own pool under the hood
 # and keeps connections by default.
 POOL = :connection_pool # nil, :connection_pool, :typhoeus_global_pool
-TWEAK_HANDLES = true # Set additional handle params to improve thread-safety
-RESET_HANDLES = false # Fully reset handle after each request, disables persistent connections
+PERSISTENT = true
+LIBCURL_TWEAKS = true # Set additional params for libcurl handles to improve thread-safety
 
 URL = "https://serpapi.com/robots.txt"
 
+# for connection timeout
+# URL = "https://www.google.com:81"
+
 VERBOSE = true
 
-# Inspired by: https://github.com/typhoeus/typhoeus/blob/master/lib/typhoeus/pool.rb
+# Based on: https://github.com/typhoeus/typhoeus/blob/master/lib/typhoeus/pool.rb
 module TyphoeusGlobalPool
   @mutex = Mutex.new
   @pid = Process.pid
@@ -66,7 +70,7 @@ module TyphoeusGlobalPool
         handles.clear
         nil
       end
-    end || ctx.send("create_#{ADAPTER}_handle")
+    end || ctx.send("create_handle_#{ADAPTER}")
   end
 
   def self.clear
@@ -93,7 +97,7 @@ def pool
       ConnectionPool.new(size: THREADS, timeout: 5) do
         # Persistent connections in `libcurl` are enabled by default.
         # Connection will be established and kept on the first request.
-        send "create_#{ADAPTER}_handle"
+        send "create_handle_#{ADAPTER}"
       end
     elsif POOL == :typhoeus_global_pool
       TyphoeusGlobalPool
@@ -103,44 +107,58 @@ def pool
   end
 end
 
-def create_ethon_handle
-  options = {}
-  options.merge!(nosignal: true) if TWEAK_HANDLES
-  options.merge!(forbid_reuse: true) if RESET_HANDLES
+def create_handle_httprb
+  handle = HTTP::Client.new
 
-  handle = Ethon::Easy.new(options)
-
-  if IMPERSONATE
-    handle.impersonate(IMPERSONATE_TARGET)
+  if PERSISTENT
+    handle = handle.persistent(URL, timeout: 30)
   end
 
   handle
 end
 
-def create_curb_handle
-  handle = Curl::Easy.new
+def create_handle_ethon
+  handle = Ethon::Easy.new
+  config_handle_ethon(handle)
+  handle
+end
 
-  if TWEAK_HANDLES
+def create_handle_curb
+  handle = Curl::Easy.new
+  config_handle_curb(handle)
+  handle
+end
+
+def config_handle_ethon(handle)
+  if LIBCURL_TWEAKS
     handle.nosignal = true
   end
 
-  if RESET_HANDLES
-    handle.setopt(Curl::CURLOPT_FORBID_REUSE, 1)
+  unless PERSISTENT
+    handle.forbid_reuse = true
   end
 
-  handle
+  if IMPERSONATE
+    handle.impersonate(IMPERSONATE_TARGET)
+  end
+end
+
+def config_handle_curb(handle)
+  if LIBCURL_TWEAKS
+    handle.nosignal = true
+  end
+
+  unless PERSISTENT
+    handle.setopt(Curl::CURLOPT_FORBID_REUSE, 1)
+  end
 end
 
 def request(process_id, request_id)
   status =
     if pool == :not_used
       send "make_request_#{ADAPTER}"
-    elsif pool.is_a?(ConnectionPool)
-      pool.with { |handle| make_request(handle) }
-    elsif pool == TyphoeusGlobalPool
-      pool.with(self) { |handle| make_request(handle) }
     else
-      raise "unknown pool: #{pool}"
+      send "make_request_#{POOL}"
     end
 
   if VERBOSE
@@ -150,42 +168,75 @@ def request(process_id, request_id)
   status
 end
 
-def make_request(handle)
-  status = send "make_request_#{ADAPTER}", handle
+def make_request_connection_pool
+  pool.with do |handle|
+    send "make_request_#{ADAPTER}", handle
+  end
+end
 
-  if RESET_HANDLES
-    # Remove all cookies from memory for this handle
-    case ADAPTER
-    when :ethon
-      handle.cookielist = "all"
-    when :curb
-      handle.setopt(Curl::CURLOPT_COOKIELIST, "all")
-    end
+def make_request_typhoeus_global_pool
+  pool.with(self) do |handle|
+    send "make_request_#{ADAPTER}", handle
+  end
+end
 
+def make_request_httprb(handle = nil)
+  handle ||= create_handle_httprb
+  response = handle.get(URL)
+
+  _body = response.to_s # body should be read
+  response.code
+rescue => error
+  error.to_s
+end
+
+def make_request_ethon(handle = nil)
+  handle ||= create_handle_ethon
+  handle.http_request(URL, :get)
+  handle.perform
+
+  status = handle.return_code
+  _body = handle.response_body # body should be read
+
+  unless PERSISTENT
+    handle.cookielist = "all"
     handle.reset
+
+    # config should re-applied after reset
+    config_handle_ethon(handle)
   end
 
   status
 end
 
-def make_request_ethon(handle = nil)
-  handle ||= create_ethon_handle
-  handle.http_request(URL, :get)
-  handle.perform
-end
-
 def make_request_curb(handle = nil)
-  handle ||= create_curb_handle
+  handle ||= create_handle_curb
   handle.url = URL
   handle.http(:GET)
-  handle.code
+
+  status = handle.code # no way to get return code string similar to `ethon` and `typhoeus`
+  _body = handle.body # body should be read
+
+  unless PERSISTENT
+    handle.setopt(Curl::CURLOPT_COOKIELIST, "all")
+    handle.reset
+
+    # config should re-applied after reset
+    config_handle_curb(handle)
+  end
+
+  status
 rescue => error
   error.to_s
 end
 
 def make_request_typhoeus
   response = Typhoeus::Request.new(URL, method: :get).run
-  response.return_code
+
+  status = response.return_code
+  _body = response.response_body # body should be read
+
+  status
 end
 
 def via_processes
@@ -221,14 +272,15 @@ if __FILE__ == $0
     end
 
   unless ADAPTER == :typhoeus
-    title << " + tweaks" if TWEAK_HANDLES
-    title << " + reset" if RESET_HANDLES
+    title << " + persistent" if PERSISTENT
+    title << " + impersonate" if IMPERSONATE && ADAPTER == :ethon
+    title << " + libcurl tweaks" if LIBCURL_TWEAKS && ADAPTER != :httprb
 
     case POOL
     when :connection_pool
       title << " + connection pool"
     when :typhoeus_global_pool
-      title << " + typhoeus pool (global)"
+      title << " + typhoeus global pool"
     end
   end
 
