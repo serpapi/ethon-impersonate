@@ -342,7 +342,7 @@ stats_per_setup.each do |title, stats|
   puts "#{title.ljust(title_offset)} | avg: #{stats[:total_time][:avg]}, max: #{stats[:total_time][:max]}"
 end
 
-# [100 requests]
+# [100 requests | macOS | local]
 #                                                                           user     system      total        real
 # httprb                                                                0.821744   0.197586   1.019330 ( 20.611882)
 # httprb + persistent + connection pool                                 0.209725   0.022617   0.232342 (  4.618736)
@@ -387,9 +387,10 @@ end
 # curb + persistent + typhoeus global pool                            | avg: 0.056, max: 0.308
 # curb + persistent + connection pool + libcurl tweaks                | avg: 0.044, max: 0.124
 # typhoeus (persistent, built-in pool)                                | avg: 0.051, max: 0.135
-
-
-# [500 requests]
+#
+# -----------------------------------------------------------------------------------------------------------------
+#
+# [500 requests | macOS | local]
 #                                                                           user     system      total        real
 # httprb                                                                4.178775   0.942253   5.121028 (111.538155)
 # httprb + persistent + connection pool                                 1.035668   0.108627   1.144295 ( 24.986391)
@@ -428,3 +429,99 @@ end
 # curb + persistent + typhoeus global pool                            | avg: 0.064, max: 0.326
 # curb + persistent + connection pool + libcurl tweaks                | avg: 0.051, max: 0.198
 # typhoeus (persistent, built-in pool)                                | avg: 0.048, max: 0.344
+#
+# -----------------------------------------------------------------------------------------------------------------
+#
+# [100 requests | Ubuntu 24.04.1 LTS | DO]
+#                                                                           user     system      total        real
+# httprb                                                                0.216619   0.025115   0.241734 (  6.246069)
+# httprb + persistent + connection pool                                 0.050329   0.001885   0.052214 (  1.295162)
+# httprb + persistent + typhoeus global pool                            0.049457   0.000363   0.049820 (  1.192864)
+# ethon                                                                 0.668131   0.040198   0.708329 (  2.308194)
+# ethon + persistent + connection pool                                  0.021372   0.002741   0.024113 (  0.949004)
+# ethon + persistent + typhoeus global pool                             0.015670   0.007769   0.023439 (  1.607388)
+# ethon + persistent + impersonate + connection pool                    0.019141   0.002591   0.021732 (  0.985338)
+# ethon + persistent + impersonate + connection pool + libcurl tweaks   0.023864   0.001621   0.025485 (  1.202922)
+# curb                                                                  0.656867   0.040769   0.697636 (  2.307108)
+# curb + persistent + connection pool                                   0.017604   0.003148   0.020752 (  0.968857)
+# curb + persistent + typhoeus global pool                              0.017796   0.003354   0.021150 (  1.069946)
+# curb + persistent + connection pool + libcurl tweaks                  0.018665   0.005169   0.023834 (  1.010701)
+# typhoeus (persistent, built-in pool)                                  0.046196   0.006216   0.052412 (  0.980394)
+
+# Statuses:
+# httprb                                                              | {200=>100}
+# httprb + persistent + connection pool                               | {200=>100}
+# httprb + persistent + typhoeus global pool                          | {200=>100}
+# ethon                                                               | {200=>100}
+# ethon + persistent + connection pool                                | {200=>100}
+# ethon + persistent + typhoeus global pool                           | {200=>100}
+# ethon + persistent + impersonate + connection pool                  | {200=>100}
+# ethon + persistent + impersonate + connection pool + libcurl tweaks | {200=>100}
+# curb                                                                | {200=>100}
+# curb + persistent + connection pool                                 | {200=>100}
+# curb + persistent + typhoeus global pool                            | {200=>100}
+# curb + persistent + connection pool + libcurl tweaks                | {200=>100}
+# typhoeus (persistent, built-in pool)                                | {200=>100}
+
+# Request times:
+# httprb                                                              | avg: 0.062, max: 0.076
+# httprb + persistent + connection pool                               | avg: 0.013, max: 0.062
+# httprb + persistent + typhoeus global pool                          | avg: 0.012, max: 0.064
+# ethon                                                               | avg: 0.023, max: 0.044
+# ethon + persistent + connection pool                                | avg: 0.009, max: 0.02
+# ethon + persistent + typhoeus global pool                           | avg: 0.016, max: 0.135
+# ethon + persistent + impersonate + connection pool                  | avg: 0.01, max: 0.024
+# ethon + persistent + impersonate + connection pool + libcurl tweaks | avg: 0.012, max: 0.02
+# curb                                                                | avg: 0.023, max: 0.047
+# curb + persistent + connection pool                                 | avg: 0.01, max: 0.029
+# curb + persistent + typhoeus global pool                            | avg: 0.011, max: 0.029
+# curb + persistent + connection pool + libcurl tweaks                | avg: 0.01, max: 0.028
+# typhoeus (persistent, built-in pool)                                | avg: 0.01, max: 0.02
+#
+# -----------------------------------------------------------------------------------------------------------------
+#
+# [500 requests | Ubuntu 24.04.1 LTS | DO]
+#                                                                           user     system      total        real
+# httprb                                                                1.114531   0.128900   1.243431 ( 31.566012)
+# httprb + persistent + connection pool                                 0.222427   0.012237   0.234664 (  5.770106)
+# httprb + persistent + typhoeus global pool                            0.223557   0.003801   0.227358 (  4.967808)
+# ethon                                                                 3.624913   0.176198   3.801111 ( 12.034871)
+# ethon + persistent + connection pool                                  0.088672   0.019632   0.108304 (  5.508997)
+# ethon + persistent + typhoeus global pool                             0.058070   0.025895   0.083965 (  4.348371)
+# ethon + persistent + impersonate + connection pool                    0.069666   0.019372   0.089038 (  4.575775)
+# ethon + persistent + impersonate + connection pool + libcurl tweaks   0.072647   0.011966   0.084613 (  5.624284)
+# curb                                                                  3.797009   0.227951   4.024960 ( 13.495271)
+# curb + persistent + connection pool                                   0.067937   0.023722   0.091659 (  5.694729)
+# curb + persistent + typhoeus global pool                              0.060239   0.025673   0.085912 (  6.155681)
+# curb + persistent + connection pool + libcurl tweaks                  0.101131   0.018388   0.119519 (  4.719070)
+# typhoeus (persistent, built-in pool)                                  0.187677   0.018605   0.206282 (  5.772416)
+
+# Statuses:
+# httprb                                                              | {200=>500}
+# httprb + persistent + connection pool                               | {200=>500}
+# httprb + persistent + typhoeus global pool                          | {200=>500}
+# ethon                                                               | {200=>500}
+# ethon + persistent + connection pool                                | {200=>500}
+# ethon + persistent + typhoeus global pool                           | {200=>500}
+# ethon + persistent + impersonate + connection pool                  | {200=>500}
+# ethon + persistent + impersonate + connection pool + libcurl tweaks | {200=>500}
+# curb                                                                | {200=>500}
+# curb + persistent + connection pool                                 | {200=>500}
+# curb + persistent + typhoeus global pool                            | {200=>500}
+# curb + persistent + connection pool + libcurl tweaks                | {200=>500}
+# typhoeus (persistent, built-in pool)                                | {200=>500}
+
+# Request times:
+# httprb                                                              | avg: 0.063, max: 0.212
+# httprb + persistent + connection pool                               | avg: 0.012, max: 0.069
+# httprb + persistent + typhoeus global pool                          | avg: 0.01, max: 0.071
+# ethon                                                               | avg: 0.024, max: 0.058
+# ethon + persistent + connection pool                                | avg: 0.011, max: 0.034
+# ethon + persistent + typhoeus global pool                           | avg: 0.009, max: 0.026
+# ethon + persistent + impersonate + connection pool                  | avg: 0.009, max: 0.028
+# ethon + persistent + impersonate + connection pool + libcurl tweaks | avg: 0.011, max: 0.033
+# curb                                                                | avg: 0.027, max: 0.211
+# curb + persistent + connection pool                                 | avg: 0.011, max: 0.07
+# curb + persistent + typhoeus global pool                            | avg: 0.012, max: 0.04
+# curb + persistent + connection pool + libcurl tweaks                | avg: 0.009, max: 0.029
+# typhoeus (persistent, built-in pool)                                | avg: 0.012, max: 0.038
