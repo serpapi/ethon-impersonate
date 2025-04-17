@@ -2,11 +2,9 @@
 require 'json'
 require 'zlib'
 require 'sinatra/base'
-# require 'rack/typhoeus'
 
 TESTSERVER = Sinatra.new do
   set :logging, false
-  # use Rack::Typhoeus::Middleware::ParamsDecoder
 
   fail_count = 0
 

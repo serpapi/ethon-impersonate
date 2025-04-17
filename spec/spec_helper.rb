@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
 require 'bundler'
 Bundler.setup
-require "ethon"
+require "ethon_impersonate"
 require "rspec"
 
 Dir[File.join(File.dirname(__FILE__), "support/**/*.rb")].each { |f| require f }

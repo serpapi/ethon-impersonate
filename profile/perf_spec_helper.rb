@@ -11,8 +11,8 @@ require_relative 'support/memory_test_helpers'
 require 'logger'
 
 if ENV['VERBOSE']
-  Ethon.logger = Logger.new($stdout)
-  Ethon.logger.level = Logger::DEBUG
+  EthonImpersonate.logger = Logger.new($stdout)
+  EthonImpersonate.logger.level = Logger::DEBUG
 end
 
 RSpec.configure do |config|

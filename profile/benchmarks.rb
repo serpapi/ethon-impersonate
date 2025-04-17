@@ -1,6 +1,6 @@
 # encoding: utf-8
 # frozen_string_literal: true
-require 'ethon'
+require 'ethon_impersonate'
 require 'open-uri'
 require 'patron'
 require 'curb'
@@ -17,7 +17,7 @@ LocalhostServer.new(TESTSERVER.new, 3002)
 
 url = 'http://localhost:3000/'.freeze
 uri = URI.parse('http://localhost:3000/').freeze
-ethon = Ethon::Easy.new(url: url)
+ethon = EthonImpersonate::Easy.new(url: url)
 patron = Patron::Session.new
 patron_url = Patron::Session.new(base_url: url)
 curb = Curl::Easy.new(url)
@@ -25,7 +25,7 @@ curb = Curl::Easy.new(url)
 puts '[Creation]'
 Benchmark.ips do |x|
   x.report('String.new') { '' }
-  x.report('Easy.new') { Ethon::Easy.new }
+  x.report('Easy.new') { EthonImpersonate::Easy.new }
 end
 
 puts '[Escape]'
@@ -85,7 +85,7 @@ Benchmark.ips do |x|
   end
 
   x.report("Easy.perform") do
-    easy = Ethon::Easy.new
+    easy = EthonImpersonate::Easy.new
     3.times do |i|
       easy.url = "http://localhost:300#{i}/?delay=1"
       easy.perform
@@ -93,9 +93,9 @@ Benchmark.ips do |x|
   end
 
   x.report("Multi.perform") do
-    multi = Ethon::Multi.new
+    multi = EthonImpersonate::Multi.new
     3.times do |i|
-      easy = Ethon::Easy.new
+      easy = EthonImpersonate::Easy.new
       easy.url = "http://localhost:300#{i}/?delay=1"
       multi.add(easy)
     end

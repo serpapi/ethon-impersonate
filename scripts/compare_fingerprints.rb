@@ -2,7 +2,7 @@ require "json"
 require "pry"
 
 require "bundler/setup"
-require "ethon"
+require "ethon_impersonate"
 
 # URL = "https://tls.peet.ws/api/all"
 URL = "https://tls.browserleaks.com/json"
@@ -10,9 +10,9 @@ URL = "https://tls.browserleaks.com/json"
 TARGET = "chrome131"
 
 def imp
-  puts ": get via ethon + #{TARGET}"
+  puts ": get via ethon-impersonate + #{TARGET}"
 
-  easy = Ethon::Easy.new(url: URL)
+  easy = EthonImpersonate::Easy.new(url: URL)
   easy.impersonate(TARGET)
   easy.perform
 
@@ -20,9 +20,9 @@ def imp
 end
 
 def not_imp
-  puts ": get via ethon"
+  puts ": get via ethon-impersonate"
 
-  easy = Ethon::Easy.new(url: URL)
+  easy = EthonImpersonate::Easy.new(url: URL)
   easy.perform
 
   JSON.parse(easy.response_body, symbolize_names: true)

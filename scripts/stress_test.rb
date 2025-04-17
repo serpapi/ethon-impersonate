@@ -23,7 +23,7 @@ if ADAPTER == :ethon
     $:.unshift File.expand_path("../../lib", __FILE__)
   end
 
-  require "ethon"
+  require "ethon_impersonate"
 end
 
 require "curb"     if ADAPTER == :curb
@@ -118,7 +118,7 @@ def create_handle_httprb
 end
 
 def create_handle_ethon
-  handle = Ethon::Easy.new
+  handle = EthonImpersonate::Easy.new
   config_handle_ethon(handle)
   handle
 end

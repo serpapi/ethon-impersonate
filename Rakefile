@@ -5,21 +5,21 @@ Bundler.setup
 require "rake"
 require "rspec/core/rake_task"
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
-require "ethon/version"
+require "ethon_impersonate/version"
 
 task gem: :build
 task :build do
-  system "gem build ethon.gemspec"
+  system "gem build ethon-impersonate.gemspec"
 end
 
 task install: :build do
-  system "gem install ethon-#{Ethon::VERSION}.gem"
+  system "gem install ethon-impersonate-#{EthonImpersonate::VERSION}.gem"
 end
 
 task release: :build do
-  system "git tag -a v#{Ethon::VERSION} -m 'Tagging #{Ethon::VERSION}'"
+  system "git tag -a v#{EthonImpersonate::VERSION} -m 'Tagging #{EthonImpersonate::VERSION}'"
   system "git push --tags"
-  system "gem push ethon-#{Ethon::VERSION}.gem"
+  system "gem push ethon-impersonate-#{EthonImpersonate::VERSION}.gem"
 end
 
 RSpec::Core::RakeTask.new(:spec) do |t|

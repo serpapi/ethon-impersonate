@@ -1,61 +1,61 @@
 # frozen_string_literal: true
-require 'ethon'
-require 'ethon/easy'
+require 'ethon_impersonate'
+require 'ethon_impersonate/easy'
 
 require_relative 'perf_spec_helper'
 require 'rspec/autorun'
 
 describe "low-level interactions with libcurl" do
-  describe Ethon::Multi do
+  describe EthonImpersonate::Multi do
     memory_leak_test("init") do
-      Ethon::Multi.new
+      EthonImpersonate::Multi.new
     end
 
     memory_leak_test("handle") do
-      Ethon::Multi.new.handle
+      EthonImpersonate::Multi.new.handle
     end
   end
 
-  describe Ethon::Easy do
+  describe EthonImpersonate::Easy do
     memory_leak_test("init") do
-      Ethon::Easy.new
+      EthonImpersonate::Easy.new
     end
 
     memory_leak_test("handle") do
-      Ethon::Easy.new.handle
+      EthonImpersonate::Easy.new.handle
     end
 
     memory_leak_test("headers") do
-      Ethon::Easy.new.headers = { "a" => 1, "b" => 2, "c" => 3, "d" => 4}
+      EthonImpersonate::Easy.new.headers = { "a" => 1, "b" => 2, "c" => 3, "d" => 4}
     end
 
     memory_leak_test("escape") do
-      Ethon::Easy.new.escape("the_sky&is_blue")
+      EthonImpersonate::Easy.new.escape("the_sky&is_blue")
     end
   end
 
 
-  describe Ethon::Easy::Form do
+  describe EthonImpersonate::Easy::Form do
     memory_leak_test("init") do
-      Ethon::Easy::Form.new(nil, {})
+      EthonImpersonate::Easy::Form.new(nil, {})
     end
 
     memory_leak_test("first") do
-      Ethon::Easy::Form.new(nil, {}).first
+      EthonImpersonate::Easy::Form.new(nil, {}).first
     end
 
     memory_leak_test("last") do
-      Ethon::Easy::Form.new(nil, {}).last
+      EthonImpersonate::Easy::Form.new(nil, {}).last
     end
 
     memory_leak_test("materialized with some params") do
-      form = Ethon::Easy::Form.new(nil, { "a" => "1" })
+      form = EthonImpersonate::Easy::Form.new(nil, { "a" => "1" })
       form.materialize
     end
 
     memory_leak_test("materialized with a file") do
       File.open(__FILE__, "r") do |file|
-        form = Ethon::Easy::Form.new(nil, { "a" => file })
+        form = EthonImpersonate::Easy::Form.new(nil, { "a" => file })
         form.materialize
       end
     end
@@ -64,12 +64,12 @@ end
 
 describe "higher level operations" do
   memory_leak_test("a simple request") do
-    Ethon::Easy.new(url: "http://localhost:3001/",
+    EthonImpersonate::Easy.new(url: "http://localhost:3001/",
                     forbid_reuse: true).perform
   end
 
   memory_leak_test("a request with headers") do
-    Ethon::Easy.new(url: "http://localhost:3001/",
+    EthonImpersonate::Easy.new(url: "http://localhost:3001/",
                     headers: { "Content-Type" => "application/json",
                                   "Something" => "1",
                                   "Else" => "qwerty",
@@ -78,7 +78,7 @@ describe "higher level operations" do
   end
 
   memory_leak_test("a request with headers and params") do
-    easy = Ethon::Easy.new(url: "http://localhost:3001/",
+    easy = EthonImpersonate::Easy.new(url: "http://localhost:3001/",
                     headers: { "Content-Type" => "application/json",
                                   "Something" => "1",
                                   "Else" => "qwerty",
@@ -93,7 +93,7 @@ describe "higher level operations" do
   end
 
   memory_leak_test("a request with headers, params, and body") do
-    easy = Ethon::Easy.new(url: "http://localhost:3001/",
+    easy = EthonImpersonate::Easy.new(url: "http://localhost:3001/",
                     headers: { "Content-Type" => "application/json",
                                   "Something" => "1",
                                   "Else" => "qwerty",

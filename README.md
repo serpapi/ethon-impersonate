@@ -1,31 +1,27 @@
-[![Gem Version](https://badge.fury.io/rb/ethon.svg)](https://badge.fury.io/rb/ethon)
-[![Build Status](https://github.com/typhoeus/ethon/workflows/Ruby/badge.svg)](https://github.com/typhoeus/ethon/actions/workflows/ruby.yml)
+[![Gem Version](https://badge.fury.io/rb/ethon-impersonate.svg)](https://badge.fury.io/rb/ethon-impersonate)
+[![Build Status](https://github.com/dsojevic/ethon-impersonate/workflows/Ruby/badge.svg)](https://github.com/dsojevic/ethon-impersonate/actions/workflows/ruby.yml)
 
-#  Ethon
+#  Ethon Impersonate
 
 In Greek mythology, Ethon, the son of Typhoeus and Echidna, is a gigantic eagle. So much for the history.
 In the modern world, Ethon is a very basic libcurl wrapper using ffi.
-
-* [Documentation](http://rubydoc.info/github/typhoeus/ethon/frames/Ethon)
-* [Website](http://typhoeus.github.com/)
-* [Mailing list](http://groups.google.com/group/typhoeus)
 
 ## Installation
 
 With bundler:
 
-    gem "ethon"
+    gem "ethon-impersonate"
 
 With rubygems:
 
-    gem install ethon
+    gem install ethon-impersonate
 
 ## Usage
 
 Making the first request is simple:
 
 ```ruby
-easy = Ethon::Easy.new(url: "www.example.com")
+easy = EthonImpersonate::Easy.new(url: "www.example.com")
 easy.perform
 #=> :ok
 ```
@@ -33,7 +29,7 @@ easy.perform
 You have access to various options, such as following redirects:
 
 ```ruby
-easy = Ethon::Easy.new(url: "www.example.com", followlocation: true)
+easy = EthonImpersonate::Easy.new(url: "www.example.com", followlocation: true)
 easy.perform
 #=> :ok
 ```
@@ -41,7 +37,7 @@ easy.perform
 Once you're done you can inspect the response code and body:
 
 ```ruby
-easy = Ethon::Easy.new(url: "www.example.com", followlocation: true)
+easy = EthonImpersonate::Easy.new(url: "www.example.com", followlocation: true)
 easy.perform
 easy.response_code
 #=> 200
@@ -54,14 +50,14 @@ easy.response_body
 In order to make life easier, there are some helpers for making HTTP requests:
 
 ```ruby
-easy = Ethon::Easy.new
+easy = EthonImpersonate::Easy.new
 easy.http_request("www.example.com", :get, { params: {a: 1} })
 easy.perform
 #=> :ok
 ```
 
 ```ruby
-easy = Ethon::Easy.new
+easy = EthonImpersonate::Easy.new
 easy.http_request("www.example.com", :post, { params: { a: 1 }, body: { b: 2 } })
 easy.perform
 #=> :ok
@@ -76,8 +72,8 @@ The `perform` method then takes all the requests in the multi handler and sends 
 
 See the following example
 ```ruby
-multi = Ethon::Multi.new
-easy = Ethon::Easy.new
+multi = EthonImpersonate::Multi.new
+easy = EthonImpersonate::Easy.new
 
 easy.http_request("www.example.com/get", :get, { http_version: :httpv2_0 })
 
