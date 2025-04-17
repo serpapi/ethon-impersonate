@@ -34,6 +34,27 @@ task :start do
 end
 
 namespace :ethon_impersonate do
+  desc "Build universal ruby platform gem"
+  task :build_universal do
+    gemspec_path = Dir.glob("*.gemspec").first
+    abort("Gemspec file not found!") unless gemspec_path
+
+    puts "Building universal (ruby platform) gem..."
+    system("gem build #{gemspec_path}") || abort("Universal gem build failed!")
+    puts "Universal gem built successfully!"
+  end
+
+  desc "Publish universal ruby platform gem"
+  task :publish_universal => :build_universal do
+    version = EthonImpersonate::VERSION
+    gem_filename = "ethon-impersonate-#{version}.gem"
+    abort("Universal gem file not found: #{gem_filename}") unless File.exist?(gem_filename)
+
+    puts "Pushing #{gem_filename} to RubyGems..."
+    system("gem push #{gem_filename}") || abort("Universal gem push failed!")
+    puts "Universal gem pushed successfully!"
+  end
+
   desc "Build gem for a specific arch_os target"
   task :build, [:arch_os] do |t, args|
     abort("Please provide an arch_os target (e.g., x86_64-linux)") unless args[:arch_os]
@@ -152,8 +173,8 @@ namespace :ethon_impersonate do
     end
   end
 
-  desc "Build all platform-specific gems"
-  task :build_all do
+  desc "Build all platform-specific gems (and universal)"
+  task :build_all => :build_universal do
     targets = EthonImpersonate::Impersonate::Settings::LIB_PLATFORM_RELEASE_MAP.keys
 
     targets.each do |arch_os|
@@ -162,11 +183,11 @@ namespace :ethon_impersonate do
       Rake::Task["ethon_impersonate:build"].reenable
     end
 
-    puts "All platform-specific gems built!"
+    puts "All gems (universal + platform-specific) built!"
   end
 
-  desc "Publish all platform-specific gems to RubyGems"
-  task :publish_all => :build_all do
+  desc "Publish all gems (universal + platform-specific) to RubyGems"
+  task :publish_all => :publish_universal do
     targets = EthonImpersonate::Impersonate::Settings::LIB_PLATFORM_RELEASE_MAP.keys
 
     targets.each do |arch_os|
@@ -175,7 +196,7 @@ namespace :ethon_impersonate do
       Rake::Task["ethon_impersonate:publish"].reenable
     end
 
-    puts "All platform-specific gems pushed to RubyGems!"
+    puts "All gems (universal + platform-specific) pushed to RubyGems!"
   end
 
   desc "Clean up downloaded and extracted files"
