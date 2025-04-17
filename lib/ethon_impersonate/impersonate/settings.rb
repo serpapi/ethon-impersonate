@@ -6,14 +6,14 @@ require "ffi/platform"
 module EthonImpersonate
   module Impersonate
     module Settings
-      LIB_VERSION = "0.9.5"
+      LIB_VERSION = "1.0.0rc1"
       LIB_EXT_PATH = File.expand_path("../../ext/", File.dirname(__dir__))
 
       LIB_DOWNLOAD_BASE_URL = "https://github.com/lexiforest/curl-impersonate/releases/download/v#{LIB_VERSION}/"
 
       LIB_OS_FULL_NAME_MAP = {
-        "linux" => "libcurl-impersonate-chrome.so.4.8.0",
-        "darwin" => "libcurl-impersonate-chrome.dylib.4",
+        "linux" => "libcurl-impersonate.so.4.8.0",
+        "darwin" => "libcurl-impersonate.dylib.4",
         "windows" => "libcurl.dll",
       }.freeze
 
