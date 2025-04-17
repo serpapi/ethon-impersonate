@@ -9,12 +9,14 @@ In the modern world, Ethon is a very basic libcurl wrapper using ffi.
 ## Installation
 
 With bundler:
-
-    gem "ethon-impersonate"
+```bash
+gem "ethon-impersonate"
+```
 
 With rubygems:
-
-    gem install ethon-impersonate
+```bash
+gem install ethon-impersonate
+```
 
 ## Usage
 
