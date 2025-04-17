@@ -13,12 +13,6 @@ require "open-uri"
 require "rubygems/package"
 require "zlib"
 
-task release: :build do
-  system "git tag -a v#{EthonImpersonate::VERSION} -m 'Tagging #{EthonImpersonate::VERSION}'"
-  system "git push --tags"
-  system "gem push ethon-impersonate-#{EthonImpersonate::VERSION}.gem"
-end
-
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.verbose = false
   t.ruby_opts = "-W -I./spec -rspec_helper"
@@ -49,6 +43,10 @@ namespace :ethon_impersonate do
     version = EthonImpersonate::VERSION
     gem_filename = "ethon-impersonate-#{version}.gem"
     abort("Universal gem file not found: #{gem_filename}") unless File.exist?(gem_filename)
+
+    puts "Tagging release"
+    system "git tag -a v#{EthonImpersonate::VERSION} -m 'Tagging #{EthonImpersonate::VERSION}'"
+    system "git push --tags"
 
     puts "Pushing #{gem_filename} to RubyGems..."
     system("gem push #{gem_filename}") || abort("Universal gem push failed!")

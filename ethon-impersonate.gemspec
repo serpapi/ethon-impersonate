@@ -8,6 +8,7 @@ require "ethon_impersonate/version"
 Gem::Specification.new do |s|
   s.name         = "ethon-impersonate"
   s.version      = EthonImpersonate::VERSION
+  s.platform     = Gem::Platform::RUBY
   s.authors      = ["David Sojevic", "Hans Hasselberg"]
   s.email        = ["david@sojevic.com"]
   s.homepage     = "https://github.com/dsojevic/ethon-impersonate"
