@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency("ffi", ["~> 1.15"])
 
   s.files = Dir.chdir(__dir__) do
-    `git ls-files -z`.split("\x0") + Dir.glob("ext/**/*")
+    `git ls-files -z`.split("\x0")
   end.reject { |file| file.start_with?(*%w[. Gemfile Guardfile Rakefile profile spec scripts]) || file.end_with?(".gitignore") }
 
   s.require_path = "lib"

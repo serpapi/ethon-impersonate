@@ -103,10 +103,12 @@ namespace :ethon_impersonate do
     puts "Building gem(s) for #{arch_os}..."
 
     target_gem_platforms.each do |target_gem_platform|
-      gemspec.platform = target_gem_platform
+      temp_gemspec = gemspec.dup
+      temp_gemspec.platform = target_gem_platform
+      temp_gemspec.files += Dir.glob("ext/**/*")
 
       temp_gemspec_path = File.join(tmp_dir, "#{File.basename(gemspec_path, ".gemspec")}.#{target_gem_platform}.gemspec")
-      File.write(temp_gemspec_path, gemspec.to_ruby)
+      File.write(temp_gemspec_path, temp_gemspec.to_ruby)
 
       system("gem build #{temp_gemspec_path} --platform #{target_gem_platform}") || abort("Gem build failed")
       puts "Gem built successfully: #{target_gem_platform}"
