@@ -185,7 +185,7 @@ namespace :ethon_impersonate do
   end
 
   desc "Publish all gems (universal + platform-specific) to RubyGems"
-  task :publish_all => :publish_universal do
+  task :publish_all => :build_all do
     targets = EthonImpersonate::Impersonate::Settings::LIB_PLATFORM_RELEASE_MAP.keys
 
     targets.each do |arch_os|
