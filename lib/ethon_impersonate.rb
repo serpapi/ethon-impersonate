@@ -12,13 +12,13 @@ rescue LoadError
 end
 require 'tempfile'
 
+require 'ethon_impersonate/impersonate'
 require 'ethon_impersonate/libc'
 require 'ethon_impersonate/curl'
 require 'ethon_impersonate/easy'
 require 'ethon_impersonate/errors'
 require 'ethon_impersonate/loggable'
 require 'ethon_impersonate/multi'
-require 'ethon_impersonate/impersonate'
 require 'ethon_impersonate/version'
 
 # EthonImpersonate is a very simple curl-impersonate wrapper.

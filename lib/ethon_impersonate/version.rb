@@ -2,5 +2,5 @@
 module EthonImpersonate
 
   # EthonImpersonate version.
-  VERSION = '0.16.0'
+  VERSION = "0.17.5"
 end

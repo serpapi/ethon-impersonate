@@ -8,12 +8,6 @@ module EthonImpersonate
     callback :progress_callback, [:pointer, :long_long, :long_long, :long_long, :long_long], :int
     ffi_lib_flags :now, :global
 
-    ffi_lib [
-      ENV['CURL_IMPERSONATE_PATH'],
-      "libcurl-impersonate-chrome",
-      "libcurl-impersonate-chrome.4.dylib",
-      File.expand_path('../../../../ext/libcurl-impersonate-chrome', __FILE__),
-      File.expand_path('../../../../ext/libcurl-impersonate-chrome.4.dylib', __FILE__),
-    ]
+    ffi_lib EthonImpersonate::Impersonate::Settings.ffi_libs
   end
 end

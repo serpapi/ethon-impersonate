@@ -2,11 +2,7 @@
 source "https://rubygems.org"
 gemspec
 
-if Gem.ruby_version < Gem::Version.new("1.9.3")
-  gem "rake", "< 11"
-else
-  gem "rake"
-end
+gem "rake"
 
 group :development, :test do
   gem "rspec", "~> 3.4"
@@ -19,23 +15,9 @@ group :development, :test do
     gem "ostruct"
   end
 
-  if Gem.ruby_version < Gem::Version.new("2.0.0")
-    gem "json", "< 2"
-  else
-    gem "json"
-  end
-
-  if Gem.ruby_version >= Gem::Version.new("2.0.0")
-    gem "mime-types", "~> 1.18"
-  end
-
-  if Gem.ruby_version >= Gem::Version.new("2.2.0")
-    gem "mustermann"
-  elsif Gem.ruby_version >= Gem::Version.new("2.1.0")
-    gem "mustermann", "0.4.0"
-  elsif Gem.ruby_version >= Gem::Version.new("2.0.0")
-    gem "mustermann", "0.3.1"
-  end
+  gem "json"
+  gem "mime-types", "~> 1.18"
+  gem "mustermann"
 end
 
 group :perf do
