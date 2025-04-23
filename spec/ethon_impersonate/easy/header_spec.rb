@@ -47,6 +47,14 @@ describe EthonImpersonate::Easy::Header do
           expect(easy.response_body).to include('"HTTP_USER_AGENT":"EthonImpersonate"')
         end
       end
+
+      context "when header value is an array" do
+        let(:headers) { { 'X-Custom' => ['Example-1', 'Example-2'] } }
+
+        it "sends" do
+          expect(easy.response_body).to include('"HTTP_X_CUSTOM":"Example-1, Example-2"')
+        end
+      end
     end
   end
 

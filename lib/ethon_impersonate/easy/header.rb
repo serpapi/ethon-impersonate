@@ -25,7 +25,11 @@ module EthonImpersonate
         headers ||= {}
         header_list = nil
         headers.each do |k, v|
-          header_list = Curl.slist_append(header_list, compose_header(k,v))
+          v_list = v.is_a?(Array) ? v : [v]
+
+          v_list.each do |v_item|
+            header_list = Curl.slist_append(header_list, compose_header(k,v_item))
+          end
         end
         Curl.set_option(:httpheader, header_list, handle)
 
