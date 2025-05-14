@@ -21,6 +21,7 @@ module EthonImpersonate
         "chrome124",
         "chrome131",
         "chrome133a",
+        "chrome136",
       ].freeze
 
       CHROME_TARGETS = [
@@ -39,15 +40,17 @@ module EthonImpersonate
       ].freeze
 
       SAFARI_MOBILE_TARGETS = [
-        "safari17_2_ios",
-        "safari18_0_ios",
+        "safari172_ios",
+        "safari180_ios",
+        "safari184_ios",
       ].freeze
 
       SAFARI_DESKTOP_TARGETS = [
-        "safari15_3",
-        "safari15_5",
-        "safari17_0",
-        "safari18_0",
+        "safari153",
+        "safari155",
+        "safari170",
+        "safari180",
+        "safari184",
       ].freeze
 
       SAFARI_TARGETS = [
@@ -55,11 +58,16 @@ module EthonImpersonate
         *SAFARI_DESKTOP_TARGETS,
       ].freeze
 
+      TOR_TARGETS = [
+        "tor145",
+      ].freeze
+
       ALL_TARGETS = [
-        *EDGE_TARGETS,
         *CHROME_TARGETS,
-        *SAFARI_TARGETS,
+        *EDGE_TARGETS,
         *FIREFOX_TARGETS,
+        *SAFARI_TARGETS,
+        *TOR_TARGETS,
       ].freeze
 
       ALIASES = {
@@ -69,6 +77,7 @@ module EthonImpersonate
         "firefox" => FIREFOX_TARGETS.last,
         "safari" => SAFARI_DESKTOP_TARGETS.last,
         "safari_ios" => SAFARI_MOBILE_TARGETS.last,
+        "tor" => TOR_TARGETS.last,
       }.freeze
 
       BROWSERS = [
@@ -76,6 +85,7 @@ module EthonImpersonate
         *EDGE_TARGETS,
         *FIREFOX_TARGETS,
         *SAFARI_TARGETS,
+        *TOR_TARGETS,
         *ALIASES.keys,
       ].freeze
 

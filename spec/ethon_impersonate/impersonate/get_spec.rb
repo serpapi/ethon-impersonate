@@ -15,16 +15,16 @@ describe "Impersonate" do
 
       it "sets default headers with impersonation" do
         get.setup(easy)
-        easy.impersonate("chrome110")
+        easy.impersonate("chrome136")
         easy.perform
         response = JSON.parse(easy.response_body)
         expect(response["headers"]).to include("user-agent")
-        expect(response["headers"]["user-agent"]).to include("Chrome/110.0.0.0")
+        expect(response["headers"]["user-agent"]).to include("Chrome/136.0.0.0")
       end
 
       it "sets no headers when default_headers is false" do
         get.setup(easy)
-        easy.impersonate("chrome110", default_headers: false)
+        easy.impersonate("chrome136", default_headers: false)
         easy.perform
         response = JSON.parse(easy.response_body)
         expect(response["headers"]).not_to include("user-agent")

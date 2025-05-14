@@ -6,7 +6,7 @@ require "ffi/platform"
 module EthonImpersonate
   module Impersonate
     module Settings
-      LIB_VERSION = "1.0.0rc1"
+      LIB_VERSION = "1.0.0"
       LIB_EXT_PATH = File.expand_path("../../ext/", File.dirname(__dir__))
 
       LIB_DOWNLOAD_BASE_URL = "https://github.com/lexiforest/curl-impersonate/releases/download/v#{LIB_VERSION}/"
