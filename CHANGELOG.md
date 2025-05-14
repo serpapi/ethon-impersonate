@@ -2,7 +2,19 @@
 
 ## Master
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.16.0...master)
+[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.17.9...master)
+
+## 0.17.9
+
+[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.17.8...v0.17.9)
+
+* Bumped [`curl-impersonate`](https://github.com/lexiforest/curl-impersonate) to `v1.0.0`
+
+## 0.17.8
+
+[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.16.0...v0.17.8)
+
+* Added basic support for [`curl-impersonate`](https://github.com/lexiforest/curl-impersonate) @ `v1.0.0rc1`
 
 ## 0.16.0
 
