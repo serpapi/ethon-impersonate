@@ -30,7 +30,7 @@ module EthonImpersonate
       }.freeze
 
       GEM_PLATFORMS_MAP = {
-        "aarch64-darwin" => ["arm64-darwin-24"],
+        "aarch64-darwin" => ["arm64-darwin-24", "arm64-darwin"],
         "x86_64-windows" => ["x64-mingw32"],
       }.freeze
 
