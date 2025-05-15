@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require "rubygems"
 require "rbconfig"
 require "fileutils"
 require "ffi/platform"
@@ -38,7 +39,11 @@ module EthonImpersonate
         libraries = []
 
         if ENV["CURL_IMPERSONATE_LIBRARY"]
-          libraries << ENV["CURL_IMPERSONATE_LIBRARY"]
+          if File.directory?(ENV["CURL_IMPERSONATE_LIBRARY"])
+            libraries += lib_names.map { |lib_name| File.join(ENV["CURL_IMPERSONATE_LIBRARY"], lib_name) }
+          else
+            libraries << ENV["CURL_IMPERSONATE_LIBRARY"]
+          end
         end
 
         if lib_names.nil? || lib_names.empty?
@@ -48,7 +53,17 @@ module EthonImpersonate
         libraries += lib_names
         libraries += lib_names.map { |lib_name| File.join(LIB_EXT_PATH, lib_name) }
 
-        libraries
+        begin
+          gem_spec = Gem.loaded_specs["ethon-impersonate"]
+          if gem_spec
+            gem_ext_path = File.join(gem_spec.full_gem_path, "ext")
+            libraries += lib_names.map { |lib_name| File.join(gem_ext_path, lib_name) }
+          end
+        rescue LoadError, NoMethodError
+          # ignore if rubygems or gem_spec not available
+        end
+
+        libraries.uniq
       end
 
       def self.release_url(target_arch_os = nil)
