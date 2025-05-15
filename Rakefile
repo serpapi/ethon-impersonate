@@ -129,7 +129,12 @@ namespace :ethon_impersonate do
       temp_gemspec_path = File.join(tmp_dir, "#{File.basename(gemspec_path, ".gemspec")}.#{target_gem_platform}.gemspec")
       File.write(temp_gemspec_path, temp_gemspec.to_ruby)
 
-      system("gem build #{temp_gemspec_path} --platform #{target_gem_platform}") || abort("Gem build failed")
+      if RUBY_VERSION < "3.0"
+        # RubyGems < 3.3 does not support --platform, so set it in the gemspec only
+        system("gem build #{temp_gemspec_path}") || abort("Gem build failed")
+      else
+        system("gem build #{temp_gemspec_path} --platform #{target_gem_platform}") || abort("Gem build failed")
+      end
       puts "Gem built successfully: #{target_gem_platform}"
     end
   end

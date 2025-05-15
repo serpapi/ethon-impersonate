@@ -19,9 +19,3 @@ group :development, :test do
   gem "mime-types", "~> 1.18"
   gem "mustermann"
 end
-
-group :perf do
-  gem "benchmark-ips"
-  gem "patron"
-  gem "curb"
-end
