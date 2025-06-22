@@ -2,61 +2,61 @@
 
 ## Master
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.17.9...master)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.17.9...master)
 
 ## 0.17.9
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.17.8...v0.17.9)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.17.8...v0.17.9)
 
 * Bumped [`curl-impersonate`](https://github.com/lexiforest/curl-impersonate) to `v1.0.0`
 
 ## 0.17.8
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.16.0...v0.17.8)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.16.0...v0.17.8)
 
 * Added basic support for [`curl-impersonate`](https://github.com/lexiforest/curl-impersonate) @ `v1.0.0rc1`
 
 ## 0.16.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.15.0...v0.16.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.15.0...v0.16.0)
 
 * Added `redirect_url` value to available informations and `Easy::Mirror`.
   ([Adrien Rey-Jarthon](https://github.com/jarthod)
 
 ## 0.15.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.14.0...v0.15.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.14.0...v0.15.0)
 
 ## 0.12.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.11.0...v0.12.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.11.0...v0.12.0)
 
-- Removed deprecated `CURLE_SSL_CACERT` pinned in curl v7.62.0 ([@arku](https://github.com/arku) in [#158](https://github.com/dsojevic/ethon-impersonate/pull/158))
+- Removed deprecated `CURLE_SSL_CACERT` pinned in curl v7.62.0 ([@arku](https://github.com/arku) in [#158](https://github.com/serpapi/ethon-impersonate/pull/158))
 
 
 ## 0.11.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.10.1...v0.11.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.10.1...v0.11.0)
 
 ## 0.10.1
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.10.0...v0.10.1)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.10.0...v0.10.1)
 
 ## 0.10.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.9.1...v0.10.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.9.1...v0.10.0)
 
 ## 0.9.1
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.9.0...v0.9.1)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.9.0...v0.9.1)
 
 ## 0.9.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.8.1...v0.9.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.8.1...v0.9.0)
 
 ## 0.8.1
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.8.0...v0.8.1)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.8.0...v0.8.1)
 
 * Support optional escaping of params.
   ([Tasos Laskos](https://github.com/zapotek)
@@ -65,24 +65,24 @@
 
 ## 0.8.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.7.3...v0.7.4)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.7.3...v0.7.4)
 
 * `Easy::Mirror`: Reduced object allocations and method calls during info handling.
   ([Tasos Laskos](https://github.com/zapotek)
 
 ## 0.7.4
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.7.3...v0.7.4)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.7.3...v0.7.4)
 
 * Support different array encodings for params.
-  ([Marcello Barnaba](https://github.com/ifad), [\#104](https://github.com/dsojevic/ethon-impersonate/pull/104))
+  ([Marcello Barnaba](https://github.com/ifad), [\#104](https://github.com/serpapi/ethon-impersonate/pull/104))
 * Programtic access to version infos.
-  ([Jonas Wagner](https://github.com/jwagner), [\#90](https://github.com/dsojevic/ethon-impersonate/pull/90))
+  ([Jonas Wagner](https://github.com/jwagner), [\#90](https://github.com/serpapi/ethon-impersonate/pull/90))
 
 
 ## 0.7.3
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.7.2...v0.7.3)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.7.2...v0.7.3)
 
 * `EthonImpersonate::Curl::FDSet`
     * Set `:fd_array` size to the current MS Windows `FD_SETSIZE` (2048).
@@ -93,7 +93,7 @@
 
 ## 0.7.2
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.7.1...v0.7.2)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.7.1...v0.7.2)
 
 * FFI data-types updated to be more correct.
 
@@ -108,25 +108,25 @@ Not backwards compatible changes:
 
 * `mime-types` are no longer a dependency. The gem will be still used if available to determine the mime type of a file which is uploaded. That means you have to have take care of the gem installation yourself.
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.6.3...v0.7.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.6.3...v0.7.0)
 
 ## 0.6.3
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.6.2...v0.6.3)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.6.2...v0.6.3)
 
 ## 0.6.2
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.6.1...v0.6.2)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.6.1...v0.6.2)
 
 ## 0.6.1
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.6.0...v0.6.1)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.6.0...v0.6.1)
 
 The changelog entries are coming soon!
 
 ## 0.6.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.12...v0.6.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.12...v0.6.0)
 
 The changelog entries are coming soon!
 
@@ -137,59 +137,59 @@ Bugfixes:
 
 ## 0.5.12
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.11...v0.5.12)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.11...v0.5.12)
 
 Enhancements:
 
 * Performance optimizations.
-  ([Kyle Oppenheim](https://github.com/koppenheim) and [Richie Vos](https://github.com/richievos), [\#48](https://github.com/dsojevic/ethon-impersonate/pull/48))
+  ([Kyle Oppenheim](https://github.com/koppenheim) and [Richie Vos](https://github.com/richievos), [\#48](https://github.com/serpapi/ethon-impersonate/pull/48))
 * Reuse memory pointer.
-  ([Richie Vos](https://github.com/richievos), [\#49](https://github.com/dsojevic/ethon-impersonate/pull/49))
+  ([Richie Vos](https://github.com/richievos), [\#49](https://github.com/serpapi/ethon-impersonate/pull/49))
 
 Bugfixes:
 
 * Fix windows install.
-  ([Derik Olsson](https://github.com/derikolsson), [\#47](https://github.com/dsojevic/ethon-impersonate/pull/47))
+  ([Derik Olsson](https://github.com/derikolsson), [\#47](https://github.com/serpapi/ethon-impersonate/pull/47))
 * Handle urls that already contain query params.
-  ([Turner King](https://github.com/turnerking ), [\#45](https://github.com/dsojevic/ethon-impersonate/pull/45))
+  ([Turner King](https://github.com/turnerking ), [\#45](https://github.com/serpapi/ethon-impersonate/pull/45))
 
 ## 0.5.11
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.10...v0.5.11)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.10...v0.5.11)
 
 Enhancements:
 
 * Add support for postredirs, unrestricted_auth.
 * Add support for cookie, cookiejar, cookiefile.
-  ([erwanlr](https://github.com/erwanlr), [\#46](https://github.com/dsojevic/ethon-impersonate/pull/46))
+  ([erwanlr](https://github.com/erwanlr), [\#46](https://github.com/serpapi/ethon-impersonate/pull/46))
 * Relax ffi requirements.
-  ([voxik](https://github.com/voxik), [\#40](https://github.com/dsojevic/ethon-impersonate/pull/40))
+  ([voxik](https://github.com/voxik), [\#40](https://github.com/serpapi/ethon-impersonate/pull/40))
 * Various documentation improvements.
   ([Craig Little](https://github.com/craiglittle))
 
 Bugfixes:
 
 * Fix the memory leaks.
-  ([Richie Vos](https://github.com/richievos), [\#45](https://github.com/dsojevic/ethon-impersonate/pull/45))
+  ([Richie Vos](https://github.com/richievos), [\#45](https://github.com/serpapi/ethon-impersonate/pull/45))
 
 ## 0.5.10
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.9...v0.5.10)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.9...v0.5.10)
 
 Enhancements:
 
 * Allow custom requests.
-  ([Nathan Sutton](https://github.com/nate), [\#36](https://github.com/dsojevic/ethon-impersonate/pull/36))
+  ([Nathan Sutton](https://github.com/nate), [\#36](https://github.com/serpapi/ethon-impersonate/pull/36))
 * Use updated version of FFI.
 
 Bugfixes:
 
 * Fix windows install issue.
-  ([brainsucker](https://github.com/brainsucker), [\#38](https://github.com/dsojevic/ethon-impersonate/pull/38))
+  ([brainsucker](https://github.com/brainsucker), [\#38](https://github.com/serpapi/ethon-impersonate/pull/38))
 
 ## 0.5.9
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.8...v0.5.9)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.8...v0.5.9)
 
 Enhancements:
 
@@ -197,17 +197,17 @@ Enhancements:
 
 ## 0.5.8
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.7...v0.5.8)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.7...v0.5.8)
 
 Enhancements:
 
 * Add support for protocols and redir_protocols(
   [libcurl SASL buffer overflow vulnerability](http://curl.haxx.se/docs/adv_20130206.html)).
-* Add max_send_speed_large and max_recv_speed_large([Paul Schuegraf](https://github.com/pschuegr), [\#33](https://github.com/dsojevic/ethon-impersonate/pull/33))
+* Add max_send_speed_large and max_recv_speed_large([Paul Schuegraf](https://github.com/pschuegr), [\#33](https://github.com/serpapi/ethon-impersonate/pull/33))
 
 ## 0.5.7
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.6...v0.5.7)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.6...v0.5.7)
 
 Enhancements:
 
@@ -215,7 +215,7 @@ Enhancements:
 
 ## 0.5.6
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.4...v0.5.6)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.4...v0.5.6)
 
 Bugfixes:
 
@@ -223,7 +223,7 @@ Bugfixes:
 
 ## 0.5.4
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.3...v0.5.4)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.3...v0.5.4)
 
 Enhancements:
 
@@ -233,7 +233,7 @@ Enhancements:
 
 ## 0.5.3
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.2...v0.5.3)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.2...v0.5.3)
 
 Enhancements:
 
@@ -248,7 +248,7 @@ Bugfixes:
 
 ## 0.5.2
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.1...v0.5.2)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.1...v0.5.2)
 
 Enhancements:
 
@@ -261,7 +261,7 @@ Bugfixes:
 
 ## 0.5.1
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.5.0...v0.5.1)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.5.0...v0.5.1)
 
 Bugfixes:
 
@@ -270,7 +270,7 @@ Bugfixes:
 
 ## 0.5.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.4.4...v0.5.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.4.4...v0.5.0)
 
 Enhancements:
 
@@ -284,7 +284,7 @@ Bugfixes:
 
 ## 0.4.4
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.4.3...v0.4.4)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.4.3...v0.4.4)
 
 Enhancements:
 
@@ -292,7 +292,7 @@ Enhancements:
 
 ## 0.4.3
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.4.2...v0.4.3)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.4.2...v0.4.3)
 
 Enhancements:
 
@@ -307,7 +307,7 @@ Bugfixes:
 
 ## 0.4.2
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.4.1...v0.4.2)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.4.1...v0.4.2)
 
 Enhancements:
 
@@ -316,7 +316,7 @@ Enhancements:
 
 ## 0.4.1
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.4.0...v0.4.1)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.4.0...v0.4.1)
 
 Bugfixes:
 
@@ -325,7 +325,7 @@ Bugfixes:
 
 ## 0.4.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.3.0...v0.4.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.3.0...v0.4.0)
 
 Enhancements:
 
@@ -340,7 +340,7 @@ Bugfixes:
 
 ## 0.3.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.2.0...v0.3.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.2.0...v0.3.0)
 
 Enhancements:
 
@@ -353,7 +353,7 @@ Bugfixes:
 
 ## 0.2.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.1.0...v0.2.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.1.0...v0.2.0)
 
 Enhancements:
 
@@ -365,12 +365,12 @@ Enhancements:
 
 ## 0.1.0
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.0.2...v0.1.0)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.0.2...v0.1.0)
 
 Enhancements:
 
 * Documentation
-  ( [Alex P](https://github.com/ifesdjeen), [\#13](https://github.com/dsojevic/ethon-impersonate/issues/13) )
+  ( [Alex P](https://github.com/ifesdjeen), [\#13](https://github.com/typhoeus/ethon/issues/13) )
 * New libcurl option dns_cache_timeout
   ( [Chris Heald](https://github.com/cheald), [\#192](https://github.com/typhoeus/typhoeus/pull/192) )
 
@@ -381,7 +381,7 @@ Bugfixes:
 
 ## 0.0.2
 
-[Full Changelog](https://github.com/dsojevic/ethon-impersonate/compare/v0.0.1...v0.0.2)
+[Full Changelog](https://github.com/serpapi/ethon-impersonate/compare/v0.0.1...v0.0.2)
 
 Bugfixes:
 

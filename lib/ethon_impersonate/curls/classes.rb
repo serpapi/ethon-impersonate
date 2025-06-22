@@ -32,7 +32,7 @@ module EthonImpersonate
 
         def clear; self[:fd_count] = 0; end
       else
-        # https://github.com/dsojevic/ethon-impersonate/issues/182
+        # https://github.com/typhoeus/ethon/issues/182
         FD_SETSIZE = begin
           # Allow to override the (new) default cap
           if ENV['ETHON_FD_SIZE']

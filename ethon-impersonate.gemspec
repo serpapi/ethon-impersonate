@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.platform     = Gem::Platform::RUBY
   s.authors      = ["David Sojevic", "Hans Hasselberg"]
   s.email        = ["david@sojevic.com"]
-  s.homepage     = "https://github.com/dsojevic/ethon-impersonate"
+  s.homepage     = "https://github.com/serpapi/ethon-impersonate"
   s.summary      = "Impersonate browser-like HTTP requests."
   s.description  = "Realistic browser-like HTTP requests using curl-impersonate's impersonation capabilities."
 
@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir.chdir(__dir__) do
     `git ls-files -z`.split("\x0")
-  end.reject { |file| file.start_with?(*%w[. Gemfile Guardfile Rakefile profile spec scripts]) || file.end_with?(".gitignore") }
+  end.reject { |file| file.start_with?(*%w[. Gemfile Guardfile Rakefile profile spec scripts assets]) || file.end_with?(".gitignore") }
 
   s.require_path = "lib"
 end
