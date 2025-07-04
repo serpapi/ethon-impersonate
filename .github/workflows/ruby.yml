@@ -34,10 +34,11 @@ jobs:
       run: |
         softwareupdate --install-rosetta --agree-to-license
     - name: Install libcurl header
+      # in macos ruby override the default provided by the image for arm64
       run: |
         if ${{ matrix.os == 'macos' }}
         then
-          arch -x86_64 brew install curl libidn2 rtmpdump zstd
+          arch -x86_64 brew install curl libidn2 rtmpdump zstd ruby
         else
           sudo apt update && sudo apt install -y --no-install-recommends libcurl4-openssl-dev
         fi
@@ -53,6 +54,7 @@ jobs:
       run: |
         if ${{ matrix.os == 'macos' }}
         then
+          arch -x86_64 gem install bundler
           arch -x86_64 bundle exec rake
         else
           bundle exec rake
