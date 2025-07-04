@@ -33,7 +33,7 @@ jobs:
       run: |
         if ${{ matrix.os == 'macos' }}
         then
-          brew install curl libidn2 rtmpdump zstd
+          arch -x86_64 brew install curl libidn2 rtmpdump zstd
         else
           sudo apt update && sudo apt install -y --no-install-recommends libcurl4-openssl-dev
         fi
@@ -43,4 +43,11 @@ jobs:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
-      run: bundle exec rake
+      # Use arch -x86_64 for macOS to ensure compatibility with some gems that may not support ARM architecture
+      run: |
+        if ${{ matrix.os == 'macos' }}
+        then
+          arch -x86_64 bundle exec rake
+        else
+          bundle exec rake
+        fi
