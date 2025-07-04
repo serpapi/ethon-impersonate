@@ -24,11 +24,15 @@ jobs:
         #  min: 2.7 - nobody uses 2.5 or 2.6 anymore
         #  max: 3.4 - 3.4 is the latest stable release
         #  intermediate version 3.0, 3.1, 3.2 don't have much value compared the latest.
-        ruby-version: [2.7, head]
+        ruby-version: [2.7] # head temporarily removed to reduce compute waste
         # ruby-version: [2.5, 2.6, 2.7, '3.0', 3.1, 3.2, head, debug, truffleruby]
     continue-on-error: ${{ endsWith(matrix.ruby, 'head') || matrix.ruby == 'debug' }}
     steps:
     - uses: actions/checkout@v3
+    - name: Enable Rosetta (macOS only)
+      if: matrix.os == 'macos'
+      run: |
+        softwareupdate --install-rosetta --agree-to-license
     - name: Install libcurl header
       run: |
         if ${{ matrix.os == 'macos' }}
