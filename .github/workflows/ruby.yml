@@ -33,6 +33,10 @@ jobs:
       if: matrix.os == 'macos'
       run: |
         softwareupdate --install-rosetta --agree-to-license
+    - name: Install brew dependencies
+      if: matrix.os == 'macos'
+      run: |
+        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     - name: Install libcurl header
       # in macos ruby override the default provided by the image for arm64
       run: |
