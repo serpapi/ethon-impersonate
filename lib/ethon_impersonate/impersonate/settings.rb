@@ -6,7 +6,7 @@ require "ffi/platform"
 module EthonImpersonate
   module Impersonate
     module Settings
-      LIB_VERSION = "1.0.0"
+      LIB_VERSION = "1.1.0"
       LIB_EXT_PATH = File.expand_path("../../ext/", File.dirname(__dir__))
 
       LIB_DOWNLOAD_BASE_URL = "https://github.com/lexiforest/curl-impersonate/releases/download/v#{LIB_VERSION}/"
@@ -25,12 +25,13 @@ module EthonImpersonate
         # "i686-windows" => "libcurl-impersonate-v#{LIB_VERSION}.i686-win32.tar.gz",
         # "riscv64-linux" => "libcurl-impersonate-v#{LIB_VERSION}.riscv64-linux-gnu.tar.gz",
         "x86_64-linux" => "libcurl-impersonate-v#{LIB_VERSION}.x86_64-linux-gnu.tar.gz",
-        # "x86_64-darwin" => "libcurl-impersonate-v#{LIB_VERSION}.x86_64-macos.tar.gz",
+        "x86_64-darwin" => "libcurl-impersonate-v#{LIB_VERSION}.x86_64-macos.tar.gz",
         # "x86_64-windows" => "libcurl-impersonate-v#{LIB_VERSION}.x86_64-win32.tar.gz",
       }.freeze
 
       GEM_PLATFORMS_MAP = {
         "aarch64-darwin" => ["arm64-darwin-24", "arm64-darwin"],
+        "x86_64-darwin" => ["x86_64-darwin-24"],
         "x86_64-windows" => ["x64-mingw32"],
       }.freeze
 
