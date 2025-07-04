@@ -42,6 +42,8 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Print ruby version
+      run: ruby -v
     - name: Run tests
       # Use arch -x86_64 for macOS to ensure compatibility with some gems that may not support ARM architecture
       run: |
