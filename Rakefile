@@ -78,10 +78,12 @@ namespace :ethon_impersonate do
 
     download_path = File.join(download_dir, release_file)
 
-    puts "Downloading #{release_url} to #{download_path}..."
-    URI.open(release_url) do |remote_file|
-      File.open(download_path, 'wb') do |file|
-        file.write(remote_file.read)
+    unless File.exist?(download_path)
+      puts "Downloading #{release_url} to #{download_path}..."
+      URI.open(release_url) do |remote_file|
+        File.open(download_path, 'wb') do |file|
+          file.write(remote_file.read)
+        end
       end
     end
 
@@ -129,7 +131,7 @@ namespace :ethon_impersonate do
       temp_gemspec_path = File.join(tmp_dir, "#{File.basename(gemspec_path, ".gemspec")}.#{target_gem_platform}.gemspec")
       File.write(temp_gemspec_path, temp_gemspec.to_ruby)
 
-      system("gem build #{temp_gemspec_path} --platform #{target_gem_platform}") || abort("Gem build failed")
+      sh("gem build #{temp_gemspec_path} ")
       puts "Gem built successfully: #{target_gem_platform}"
     end
   end

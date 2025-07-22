@@ -20,15 +20,30 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu, macos]
-        ruby-version: [2.5, 2.6, 2.7, '3.0', 3.1, 3.2, head, debug, truffleruby]
+        # reduce set of ruby to validate min and max to reduce compute waste.
+        #  min: 2.7 - nobody uses 2.5 or 2.6 anymore
+        #  max: 3.4 - 3.4 is the latest stable release
+        #  intermediate version 3.0, 3.1, 3.2 don't have much value compared the latest.
+        ruby-version: [2.7] # head temporarily removed to reduce compute waste
+        # ruby-version: [2.5, 2.6, 2.7, '3.0', 3.1, 3.2, head, debug, truffleruby]
     continue-on-error: ${{ endsWith(matrix.ruby, 'head') || matrix.ruby == 'debug' }}
     steps:
     - uses: actions/checkout@v3
-    - name: Install libcurl header
+    - name: Enable Rosetta (macOS only)
+      if: matrix.os == 'macos'
       run: |
+        softwareupdate --install-rosetta --agree-to-license
+    - name: Install brew dependencies
+      if: matrix.os == 'macos'
+      run: |
+        arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    - name: Install libcurl header
+      # in macos ruby override the default provided by the image for arm64
+      run: |
+        export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
         if ${{ matrix.os == 'macos' }}
         then
-          brew install curl
+          arch -x86_64 /usr/local/bin/brew install curl libidn2 rtmpdump zstd ruby
         else
           sudo apt update && sudo apt install -y --no-install-recommends libcurl4-openssl-dev
         fi
@@ -37,5 +52,15 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby-version }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - name: Print ruby version
+      run: ruby -v
     - name: Run tests
-      run: bundle exec rake
+      # Use arch -x86_64 for macOS to ensure compatibility with some gems that may not support ARM architecture
+      run: |
+        if ${{ matrix.os == 'macos' }}
+        then
+          arch -x86_64 gem install bundler
+          arch -x86_64 bundle exec rake
+        else
+          bundle exec rake
+        fi

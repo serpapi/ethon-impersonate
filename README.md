@@ -23,6 +23,15 @@ With rubygems:
 gem install ethon-impersonate
 ```
 
+## Dependencies
+On MacOS Apple Silicon, you need to install the following dependencies using Homebrew:
+
+```bash
+brew install libidn2 rtmpdump zstd
+```
+
+Note: Homebrew must be loaded in the same arch than the Ruby interpreter. If you are using `arch -x86_64` to run Ruby, you must also run Homebrew with `arch -x86_64 brew install ...`.
+
 ## Usage
 
 Making the first request is simple:
