@@ -32,7 +32,9 @@ namespace :ethon_impersonate do
         "Check that curl-impersonate v#{version} publishes a build for #{arch_os}."
     end
 
-    copied = EthonImpersonate::LibraryInstaller.extract(StringIO.new(archive), vendor_dir, lib_glob)
+    copied = EthonImpersonate::LibraryInstaller.extract(
+      StringIO.new(archive), vendor_dir, lib_glob, prune_stale: true
+    )
 
     if copied.empty?
       abort "ethon_impersonate: no matching library found in the archive " \

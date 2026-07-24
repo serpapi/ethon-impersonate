@@ -2,8 +2,6 @@
 module EthonImpersonate
   module Errors
 
-    # Raises when the impersonation target is not recognized by the
-    # loaded libcurl-impersonate library.
     class InvalidImpersonateTarget < ImpersonateFailed
       def initialize(target)
         message = "Invalid impersonation target: '#{target}'. " \

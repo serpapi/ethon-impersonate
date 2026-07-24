@@ -94,7 +94,7 @@ If a target is not recognized by the loaded library, `impersonate` raises `Ethon
 The gem loads the first `libcurl-impersonate` it finds, in this order:
 
 1. The path in the `CURL_IMPERSONATE_LIBRARY` environment variable
-2. `vendor/curl-impersonate/` under the app root (populated by the Rails rake task below)
+2. `vendor/curl-impersonate/` under the app root — `Rails.root`, or the directory containing your `Gemfile`, or the current directory (populated by the Rails rake task below)
 3. A system-installed library (normal `ld.so` lookup, e.g. `/usr/local/lib`)
 4. The library bundled with the platform-specific gem
 

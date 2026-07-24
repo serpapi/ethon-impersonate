@@ -7,8 +7,7 @@ require 'tmpdir'
 require 'ethon_impersonate/library_installer'
 
 describe EthonImpersonate::LibraryInstaller do
-  # Build a gzipped tar in memory mirroring a curl-impersonate release layout.
-  # entries: [{ name:, body: } | { name:, target:, type: :symlink }]
+
   def build_archive(entries)
     raw = StringIO.new
     Zlib::GzipWriter.wrap(raw) do |gz|
@@ -72,6 +71,52 @@ describe EthonImpersonate::LibraryInstaller do
 
       Dir.mktmpdir do |dir|
         expect(described_class.extract(archive, dir, "libcurl-impersonate.so*")).to eq([])
+      end
+    end
+
+    context "with prune_stale: true" do
+      it "deletes a previously installed library with a different SONAME" do
+        archive = build_archive([
+          { name: "libcurl-impersonate.so.5.1.0", body: "newer-abi" },
+        ])
+
+        Dir.mktmpdir do |dir|
+          File.write(File.join(dir, "libcurl-impersonate.so.4.8.0"), "old-abi")
+          File.write(File.join(dir, "unrelated.txt"), "keep me")
+
+          copied = described_class.extract(archive, dir, "libcurl-impersonate.so*", prune_stale: true)
+
+          expect(copied.map { |p| File.basename(p) }).to eq(["libcurl-impersonate.so.5.1.0"])
+          expect(File.exist?(File.join(dir, "libcurl-impersonate.so.4.8.0"))).to be(false)
+          expect(File.read(File.join(dir, "unrelated.txt"))).to eq("keep me")
+        end
+      end
+
+      it "keeps a freshly overwritten library with the same filename" do
+        archive = build_archive([
+          { name: "libcurl-impersonate.so.4.8.0", body: "new-build" },
+        ])
+
+        Dir.mktmpdir do |dir|
+          File.write(File.join(dir, "libcurl-impersonate.so.4.8.0"), "old-build")
+
+          described_class.extract(archive, dir, "libcurl-impersonate.so*", prune_stale: true)
+
+          expect(File.read(File.join(dir, "libcurl-impersonate.so.4.8.0"))).to eq("new-build")
+        end
+      end
+
+      it "does not prune anything when the archive contained no match" do
+        archive = build_archive([{ name: "README.md", body: "hi" }])
+
+        Dir.mktmpdir do |dir|
+          File.write(File.join(dir, "libcurl-impersonate.so.4.8.0"), "old-abi")
+
+          copied = described_class.extract(archive, dir, "libcurl-impersonate.so*", prune_stale: true)
+
+          expect(copied).to eq([])
+          expect(File.read(File.join(dir, "libcurl-impersonate.so.4.8.0"))).to eq("old-abi")
+        end
       end
     end
   end

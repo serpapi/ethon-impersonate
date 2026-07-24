@@ -44,8 +44,20 @@ module EthonImpersonate
       def self.vendor_lib_dir
         return ENV["ETHON_IMPERSONATE_VENDOR_DIR"] if ENV["ETHON_IMPERSONATE_VENDOR_DIR"]
 
-        base = (Rails.root.to_s if defined?(Rails) && Rails.root) || Dir.pwd
-        File.join(base, "vendor", "curl-impersonate")
+        File.join(app_root, "vendor", "curl-impersonate")
+      end
+
+      def self.app_root
+        return Rails.root.to_s if defined?(Rails) && Rails.root
+
+        if defined?(Bundler)
+          begin
+            return Bundler.root.to_s
+          rescue Bundler::GemfileNotFound
+          end
+        end
+
+        Dir.pwd
       end
 
       def self.ffi_libs
