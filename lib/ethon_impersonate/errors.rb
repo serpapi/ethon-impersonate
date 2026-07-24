@@ -8,6 +8,8 @@ require 'ethon_impersonate/errors/multi_remove'
 require 'ethon_impersonate/errors/select'
 require 'ethon_impersonate/errors/invalid_option'
 require 'ethon_impersonate/errors/invalid_value'
+require 'ethon_impersonate/errors/impersonate_failed'
+require 'ethon_impersonate/errors/invalid_impersonate_target'
 
 module EthonImpersonate
 

@@ -20,6 +20,7 @@ require 'ethon_impersonate/errors'
 require 'ethon_impersonate/loggable'
 require 'ethon_impersonate/multi'
 require 'ethon_impersonate/version'
+require 'ethon_impersonate/railtie' if defined?(Rails::Railtie)
 
 # EthonImpersonate is a very simple curl-impersonate wrapper.
 # It provides direct access to libcurl functionality

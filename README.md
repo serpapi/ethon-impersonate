@@ -75,15 +75,48 @@ easy.response_code
 
 ### Available Browser Targets
 
-The gem supports all browser targets available in curl-impersonate. Some popular targets include:
+Target strings are passed directly to the loaded `libcurl-impersonate` library, which is the sole authority on which targets are supported. This means new targets become available as soon as you use a curl-impersonate build that supports them without waiting for a gem update.
 
-- **Chrome**: `chrome136`, `chrome131_android`
-- **Firefox**: `firefox135`
-- **Safari**: `safari184`, `safari184_ios`
+The set of valid targets depends on the curl-impersonate version installed on your system (or bundled with the platform-specific gem, currently `v1.5.6`). Targets are always exact versioned names, for example:
+
+- **Chrome**: `chrome142`, `chrome131_android`
+- **Firefox**: `firefox144`
+- **Safari**: `safari260`, `safari260_ios`
 - **Edge**: `edge101`
 - **Tor**: `tor145`
 
-For a complete list of available targets, see the [curl-impersonate bin directory](https://github.com/lexiforest/curl-impersonate/tree/main/bin).
+For the complete list supported by your curl-impersonate version, see the [curl-impersonate documentation](https://github.com/lexiforest/curl-impersonate) (e.g. the [bin directory](https://github.com/lexiforest/curl-impersonate/tree/main/bin) of the matching release).
+
+If a target is not recognized by the loaded library, `impersonate` raises `EthonImpersonate::Errors::InvalidImpersonateTarget` with details about what went wrong. Other impersonation failures raise `EthonImpersonate::Errors::ImpersonateFailed`.
+
+### Using a Newer curl-impersonate
+
+The gem loads the first `libcurl-impersonate` it finds, in this order:
+
+1. The path in the `CURL_IMPERSONATE_LIBRARY` environment variable
+2. `vendor/curl-impersonate/` under the app root (populated by the Rails rake task below)
+3. A system-installed library (normal `ld.so` lookup, e.g. `/usr/local/lib`)
+4. The library bundled with the platform-specific gem
+
+To use browser targets newer than the bundled library supports, download the `libcurl-impersonate` archive for your platform from the [curl-impersonate releases page](https://github.com/lexiforest/curl-impersonate/releases) (not the CLI archive — the gem needs the shared library), extract it, and point an environment variable at it:
+
+```bash
+CURL_IMPERSONATE_LIBRARY=/path/to/libcurl-impersonate.so ruby your_script.rb
+```
+
+New targets work immediately — no gem update required.
+
+#### Rails: `rake ethon_impersonate:update_lib`
+
+In a Rails application the gem registers a rake task that automates the download. It fetches the `libcurl-impersonate` build for the current platform into `<Rails.root>/vendor/curl-impersonate/`, which the gem then loads automatically, ahead of the bundled library:
+
+```bash
+# Fetch the version the gem is built against:
+bin/rails ethon_impersonate:update_lib
+
+# Or pin a specific curl-impersonate version:
+bin/rails ethon_impersonate:update_lib[1.5.6]
+```
 
 ### Example with Browser Impersonation
 
