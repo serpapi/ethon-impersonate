@@ -6,7 +6,7 @@ require "ffi/platform"
 module EthonImpersonate
   module Impersonate
     module Settings
-      LIB_VERSION = "1.3.0"
+      LIB_VERSION = "1.5.6"
       LIB_EXT_PATH = File.expand_path("../../ext/", File.dirname(__dir__))
 
       LIB_DOWNLOAD_BASE_URL = "https://github.com/lexiforest/curl-impersonate/releases/download/v#{LIB_VERSION}/"
@@ -15,6 +15,12 @@ module EthonImpersonate
         "linux" => ["libcurl-impersonate.so.4.8.0", "libcurl-impersonate.4.8.0.so"],
         "darwin" => ["libcurl-impersonate.dylib.4", "libcurl-impersonate.4.dylib"],
         "windows" => ["libcurl.dll", "libcurl-impersonate.dll"],
+      }.freeze
+
+      LIB_GLOB_MAP = {
+        "linux" => "libcurl-impersonate.so*",
+        "darwin" => "libcurl-impersonate*.dylib",
+        "windows" => "{libcurl,libcurl-impersonate}.dll",
       }.freeze
 
       LIB_PLATFORM_RELEASE_MAP = {
@@ -35,6 +41,25 @@ module EthonImpersonate
         "x86_64-windows" => ["x64-mingw32"],
       }.freeze
 
+      def self.vendor_lib_dir
+        return ENV["ETHON_IMPERSONATE_VENDOR_DIR"] if ENV["ETHON_IMPERSONATE_VENDOR_DIR"]
+
+        File.join(app_root, "vendor", "curl-impersonate")
+      end
+
+      def self.app_root
+        return Rails.root.to_s if defined?(Rails) && Rails.root
+
+        if defined?(Bundler)
+          begin
+            return Bundler.root.to_s
+          rescue Bundler::GemfileNotFound
+          end
+        end
+
+        Dir.pwd
+      end
+
       def self.ffi_libs
         libraries = []
 
@@ -46,14 +71,27 @@ module EthonImpersonate
           abort "Unsupported architecture/OS combination: #{arch_os}"
         end
 
+        libraries += Dir.glob(File.join(vendor_lib_dir, lib_glob))
         libraries += lib_names
-        libraries += lib_names.map { |lib_name| File.join(LIB_EXT_PATH, lib_name) }
+        libraries += Dir.glob(File.join(LIB_EXT_PATH, lib_glob))
 
         libraries
       end
 
-      def self.release_url(target_arch_os = nil)
-        "#{LIB_DOWNLOAD_BASE_URL}#{lib_release_file(target_arch_os)}"
+      def self.lib_glob(target_os = nil)
+        target_os ||= FFI::Platform::OS
+        glob = LIB_GLOB_MAP[target_os]
+
+        if glob.nil?
+          abort "Unsupported OS: #{target_os}"
+        end
+
+        glob
+      end
+
+      def self.release_url(target_arch_os = nil, version: LIB_VERSION)
+        base = "https://github.com/lexiforest/curl-impersonate/releases/download/v#{version}/"
+        "#{base}#{lib_release_file(target_arch_os, version: version)}"
       end
 
       def self.lib_names(target_os = nil)
@@ -67,7 +105,7 @@ module EthonImpersonate
         names
       end
 
-      def self.lib_release_file(target_arch_os = nil)
+      def self.lib_release_file(target_arch_os = nil, version: LIB_VERSION)
         target_arch_os ||= arch_os
         release = LIB_PLATFORM_RELEASE_MAP[target_arch_os]
 
@@ -75,7 +113,7 @@ module EthonImpersonate
           abort "Unsupported architecture/OS combination: #{target_arch_os}"
         end
 
-        release
+        release.gsub("v#{LIB_VERSION}", "v#{version}")
       end
 
       def self.arch_os

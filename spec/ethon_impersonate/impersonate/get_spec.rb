@@ -32,7 +32,9 @@ describe "Impersonate" do
 
       it "raises error for unknown browser" do
         get.setup(easy)
-        expect { easy.impersonate("unknown") }.to raise_error("Invalid impersonation target: 'unknown'")
+        expect { easy.impersonate("unknown") }.to raise_error(
+          EthonImpersonate::Errors::InvalidImpersonateTarget, /unknown/
+        )
       end
     end
   end

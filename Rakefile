@@ -7,11 +7,10 @@ require "rspec/core/rake_task"
 $LOAD_PATH.unshift File.expand_path("../lib", __FILE__)
 require "ethon_impersonate/version"
 require "ethon_impersonate/impersonate/settings"
+require "ethon_impersonate/library_installer"
 
 require "fileutils"
 require "open-uri"
-require "rubygems/package"
-require "zlib"
 
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.verbose = false
@@ -62,15 +61,13 @@ namespace :ethon_impersonate do
 
     release_url = EthonImpersonate::Impersonate::Settings.release_url(arch_os)
     release_file = EthonImpersonate::Impersonate::Settings.lib_release_file(arch_os)
-    lib_names = EthonImpersonate::Impersonate::Settings.lib_names(os_target)
+    lib_glob = EthonImpersonate::Impersonate::Settings.lib_glob(os_target)
     ext_path = EthonImpersonate::Impersonate::Settings::LIB_EXT_PATH
 
     download_dir = "tmp/downloads/#{arch_os}"
-    extract_dir = "tmp/extracted/#{arch_os}"
     tmp_dir = "tmp/gemspecs"
 
     FileUtils.mkdir_p(download_dir)
-    FileUtils.mkdir_p(extract_dir)
     FileUtils.mkdir_p(tmp_dir)
     FileUtils.mkdir_p(ext_path)
 
@@ -87,31 +84,14 @@ namespace :ethon_impersonate do
       end
     end
 
-    puts "Extracting #{download_path} to #{extract_dir}..."
-    Zlib::GzipReader.open(download_path) do |gz|
-      Gem::Package::TarReader.new(gz) do |tar|
-        tar.each do |entry|
-          next unless entry.file?
-
-          filename = File.basename(entry.full_name)
-
-          if lib_names.any? { |lib| filename.start_with?(lib) }
-            dest_path = File.join(ext_path, filename)
-
-            FileUtils.mkdir_p(File.dirname(dest_path))
-            File.open(dest_path, "wb") { |f| f.write(entry.read) }
-            puts "Copied #{entry.full_name} → #{dest_path}"
-          end
-        end
-      end
+    puts "Extracting #{download_path} to #{ext_path}..."
+    copied_libs = File.open(download_path, "rb") do |gz|
+      EthonImpersonate::LibraryInstaller.extract(gz, ext_path, lib_glob)
     end
-
-    copied_libs = Dir.entries(ext_path).select do |filename|
-      lib_names.any? { |lib| filename.start_with?(lib) }
-    end
+    copied_libs.each { |path| puts "Copied → #{path}" }
 
     if copied_libs.empty?
-      abort("No matching libraries found in archive for #{arch_os}. Expected one of: #{lib_names.inspect}")
+      abort("No matching libraries found in archive for #{arch_os}. Expected a file matching #{lib_glob.inspect}.")
     end
 
     gemspec_path = Dir.glob("*.gemspec").first

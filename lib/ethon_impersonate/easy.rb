@@ -314,19 +314,30 @@ module EthonImpersonate
 
     # Impersonate a browser profile
     #
-    # @example Impersonate Chrome 110
-    #   easy.impersonate("chrome110")
+    # The target string is passed directly to the loaded libcurl-impersonate
+    # library, which determines the set of supported targets.
+    #
+    # @example Impersonate Chrome 142
+    #   easy.impersonate("chrome142")
     #
     # @param [ String ] target The browser profile to impersonate
     # @param [ Boolean ] default_headers Whether to use default headers (default: true)
     #
-    # @return [ Integer ] The curl return code
+    # @return [ Integer ] The curl return code (always 0)
+    #
+    # @raise [ EthonImpersonate::Errors::InvalidImpersonateTarget ] If the target is not
+    #   recognized by the loaded libcurl-impersonate.
+    # @raise [ EthonImpersonate::Errors::ImpersonateFailed ] If impersonation fails for
+    #   another reason.
     def impersonate(target, default_headers: true)
-      unless EthonImpersonate::Impersonate::Targets.valid_browser?(target)
-        raise Errors::EthonImpersonateError.new("Invalid impersonation target: '#{target}'")
-      end
+      code = Curl.easy_impersonate(handle, target.to_s, default_headers ? 1 : 0)
+      return code if code == 0
 
-      Curl.easy_impersonate(handle, target, default_headers ? 1 : 0)
+      if code == Curl::EasyCode[:bad_function_argument]
+        raise Errors::InvalidImpersonateTarget.new(target)
+      else
+        raise Errors::ImpersonateFailed.new(target, code)
+      end
     end
   end
 end
